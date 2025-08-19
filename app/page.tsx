@@ -1,7 +1,14 @@
-import Image from "next/image";
 
-export default function Home() {
+import { FeaturedEvents } from "./components/FeaturedEvents";
+import { Hero } from "./components/Hero";
+import { SearchBar } from "./components/SearchBar";
+
+export default function HomePage() {
   return (
-   <div>Hello World!</div>
+    <main>
+      <Hero />
+      <SearchBar />
+      <FeaturedEvents />
+    </main>
   );
 }
