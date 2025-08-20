@@ -124,25 +124,7 @@ export function Footer() {
           
             </ul>
           </div>
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">
-              Subscribe to our newsletter
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Get the latest updates on new events and special offers.
-            </p>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="px-4 py-2 bg-gray-800 text-gray-200 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow"
-              />
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-md transition-colors">
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
+          
         </div>
         <hr className="border-gray-800 my-8" />
         <div className="flex flex-col md:flex-row justify-between items-center">

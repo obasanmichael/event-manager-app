@@ -20,16 +20,11 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     {
       name: "Events",
-      href: "/",
-      sublinks: [
-        { name: "Concerts", href: "#" },
-        { name: "Conferences", href: "#" },
-        { name: "Workshops", href: "#" },
-        { name: "Exhibitions", href: "#" },
-      ],
+      href: "/events",
+      
     },
-    { name: "About", href: "/" },
-    { name: "Contact", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
   return (
     <nav
@@ -55,31 +50,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <div className="flex space-x-6">
               {navLinks.map((item) =>
-                item.sublinks ? (
-                  <div key={item.name} className="relative group">
-                    <button
-                      className={`flex items-center text-sm font-medium group-hover:text-blue-500 transition-colors ${
-                        isScrolled ? "text-gray-700" : "text-white"
-                      }`}
-                    >
-                      {item.name}
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    </button>
-                    <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
-                      <div className="py-1">
-                        {item.sublinks.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            href={sub.href}
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
+                (
                   <Link
                     key={item.name}
                     href={item.href}
