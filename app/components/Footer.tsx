@@ -6,6 +6,7 @@ import {
   Linkedin,
   Youtube,
 } from "lucide-react";
+import Link from "next/link";
 export function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
@@ -13,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Me-event</h3>
+            <Link href={'/'} className="text-xl font-bold mb-4">Me-event</Link>
             <p className="text-gray-400 mb-6">
               The premium platform for event management. Create, discover, and
               attend events that matter.
@@ -56,37 +57,45 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a
+                <Link
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/events"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Browse Events
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/login"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Create Event
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Contact us
+                </Link>
               </li>
            
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/about"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
             
             </ul>

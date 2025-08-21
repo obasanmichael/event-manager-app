@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <a href="#" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <span
                 className={`text-2xl font-bold ${
                   isScrolled ? "text-blue-600" : "text-white"
@@ -44,7 +44,7 @@ const Navbar = () => {
               >
                 Me-event
               </span>
-            </a>
+            </Link>
           </div>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
