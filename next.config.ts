@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "randomuser.me",
+        pathname: "/api/portraits/**",
       },
       // Add more domains if you use others
     ],
