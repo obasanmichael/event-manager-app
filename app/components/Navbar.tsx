@@ -66,19 +66,19 @@ const Navbar = () => {
             {/* Auth Buttons */}
             <div className="flex items-center space-x-4">
               <a
-                href="#"
+                href="/login"
                 className={`text-sm font-medium hover:text-blue-500 transition-colors ${
                   isScrolled ? "text-gray-700" : "text-white"
                 }`}
               >
                 Log in
               </a>
-              <a
-                href="#"
+              <Link
+                href="/signup"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
               >
                 Sign up
-              </a>
+              </Link>
             </div>
           </div>
           {/* Mobile Menu Button */}
@@ -113,13 +113,13 @@ const Navbar = () => {
             
               <hr className="my-1" />
               <Link
-                href="#"
+                href="/login"
                 className="text-gray-700 hover:text-blue-500 py-2 text-sm font-medium"
               >
                 Log in
               </Link>
               <Link
-                href="#"
+                href="/signup"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
               >
                 Sign up
