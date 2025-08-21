@@ -5,8 +5,6 @@ import {
   Instagram,
   Linkedin,
   Youtube,
-  Mail,
-  ArrowRight,
 } from "lucide-react";
 export function Footer() {
   return (

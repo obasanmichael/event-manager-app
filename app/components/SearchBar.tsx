@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from "react";
-import { Search, Calendar, MapPin, Tag, ChevronDown, Send } from "lucide-react";
+import React from "react";
+import { Search, Send } from "lucide-react";
 export function SearchBar() {
  
   return (

@@ -1,4 +1,5 @@
 import { Calendar, Clock, MapPin, Ticket } from "lucide-react";
+import Image from "next/image";
 
 interface EventCardProps {
   image: string;
@@ -23,7 +24,7 @@ const EventCard = ({
     <div className="group rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-blue-200">
       {/* Image */}
       <div className="relative h-52 overflow-hidden">
-        <img
+        <Image
           src={image}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"

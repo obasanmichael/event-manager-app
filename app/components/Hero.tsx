@@ -1,5 +1,6 @@
 import React from "react";
 import { CalendarIcon, MapPinIcon } from "lucide-react";
+import Image from "next/image";
 export function Hero() {
   return (
     <div className="relative w-full bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800 overflow-hidden">
@@ -36,7 +37,7 @@ export function Hero() {
                     key={i}
                     className="w-8 h-8 rounded-full border-2 border-blue-900 overflow-hidden"
                   >
-                    <img
+                    <Image
                       src={`https://randomuser.me/api/portraits/men/${
                         20 + i
                       }.jpg`}
