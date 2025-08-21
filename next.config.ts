@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn.pexels.com",
       },
+      {
+        protocol: "https",
+        hostname: "randomuser.me",
+      },
       // Add more domains if you use others
     ],
   },
