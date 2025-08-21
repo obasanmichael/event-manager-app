@@ -38,8 +38,8 @@ export function Hero() {
                     className="w-8 h-8 rounded-full border-2 border-blue-900 overflow-hidden"
                   >
                     <Image
-                      src={`https://source.unsplash.com/random/80x80/?face&sig=${i}`}
-                      alt={`User ${i}`}
+                      src={`https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&q=80`}
+                      alt="User"
                       width={32}
                       height={32}
                       className="w-full h-full object-cover"
