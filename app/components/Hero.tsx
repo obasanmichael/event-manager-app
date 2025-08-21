@@ -42,7 +42,9 @@ export function Hero() {
                         20 + i
                       }.jpg`}
                       alt="User"
-                      className="w-full h-full object-cover"
+                      width={32}
+                      height={32}
+                      className="object-cover"
                     />
                   </div>
                 ))}
