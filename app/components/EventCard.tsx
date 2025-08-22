@@ -26,8 +26,12 @@ const EventCard = ({
       <div className="relative h-52 overflow-hidden">
         <Image
           src={image}
+          sizes="(max-width: 640px) 100vw, 
+           (max-width: 1024px) 50vw, 
+           33vw"
+          fill
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-blue-700 shadow-sm flex items-center gap-1">
           <Ticket className="h-3.5 w-3.5" />
