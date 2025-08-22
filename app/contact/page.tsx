@@ -5,12 +5,7 @@ export default function ContactPage() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <div className="relative h-64 md:h-80 lg:h-96 w-full">
-        <Image
-          src="/images/contact-hero.jpg" // replace with your actual image
-          alt="Contact background"
-          fill
-          className="object-cover"
-        />
+       
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800 bg-opacity-70 flex flex-col items-center justify-center text-center text-white px-4">
           <h1 className="text-3xl md:text-4xl font-bold">Contact Us</h1>
           <p className="mt-2 text-sm md:text-base max-w-2xl">
