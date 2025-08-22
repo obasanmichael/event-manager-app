@@ -1,5 +1,6 @@
 import React from "react";
 import EventCard from "./EventCard";
+import Link from "next/link";
 export function FeaturedEvents() {
   const events = [
     {
@@ -96,9 +97,11 @@ export function FeaturedEvents() {
           ))}
         </div>
         <div className="mt-12 text-center">
-          <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
-            View All Events
-          </button>
+          <Link href={'/events'}>
+            <button className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all">
+              View All Events
+            </button>
+          </Link>
         </div>
       </div>
     </div>

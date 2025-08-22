@@ -123,6 +123,7 @@ const Navbar = () => {
                 <Link
                   key={link.name}
                   href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
                   className="text-gray-700 hover:text-blue-500 py-2 text-sm font-medium"
                 >
                   {link.name}
@@ -133,11 +134,13 @@ const Navbar = () => {
               <Link
                 href="/login"
                 className="text-gray-700 hover:text-blue-500 py-2 text-sm font-medium"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 Log in
               </Link>
               <Link
                 href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
               >
                 Sign up
