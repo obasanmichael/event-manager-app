@@ -2,6 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,6 +17,7 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -30,6 +32,8 @@ const LoginPage = () => {
   const onSubmit = async (data: LoginFormData) => {
     console.log("login data:", data);
     // Call your API here
+
+    router.push('/app')
   };
 
   return (
