@@ -9,6 +9,7 @@ type EventItemProps = {
   event: {
     id: string;
     title: string;
+    description?: string;
     startsAt: string | Date;
     endsAt?: string | Date;
     location: string;

@@ -6,9 +6,11 @@ import { events as mockEvents, Event } from "./events";
 import Link from "next/link";
 import { Button } from "@/app/components/Button";
 import EventItem from "./eventItem";
+import EventForm from "./EventForm";
 
 const EventsPage = () => {
-  const [events] = useState<Event[]>(mockEvents);
+    const [events] = useState<Event[]>(mockEvents);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
   const hasEvents = events.length > 0;
 
@@ -17,11 +19,12 @@ const EventsPage = () => {
       {/* Page Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Your Events</h1>
-        <Link href="/app/create">
-          <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition">
-            + Create Event
-          </Button>
-        </Link>
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
+        >
+          + Create Event
+        </Button>
       </div>
 
       {/* Empty State */}
@@ -30,11 +33,12 @@ const EventsPage = () => {
           <p className="text-gray-500 mb-4">
             You have not yet created any events.
           </p>
-          <Link href="/app/create">
-            <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition">
-              Create Your First Event
-            </Button>
-          </Link>
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
+          >
+            Create Your First Event
+          </Button>
         </div>
       )}
 
@@ -46,6 +50,25 @@ const EventsPage = () => {
               <EventItem key={event.id} event={event} />
             ))}
           </ul>
+        </div>
+      )}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-white/30 z-50">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6">
+            {/* <h2 className="text-xl font-bold mb-4">Create New Event</h2> */}
+            <EventForm
+              onSubmit={(data) => {
+                console.log(data);
+                setIsModalOpen(false); // close modal after successful submit
+              }}
+            />
+            <div className="flex justify-end mt-4">
+              <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

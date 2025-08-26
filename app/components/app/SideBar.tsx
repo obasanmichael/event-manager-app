@@ -56,7 +56,7 @@ const Sidebar = () => {
             <SidebarLink
               href="/app/create"
               icon={<PlusCircle size={20} />}
-              label="Create Event"
+              label="Attendees"
               collapsed={collapsed}
             />
             <SidebarLink
