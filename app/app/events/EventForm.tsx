@@ -15,7 +15,7 @@ const eventSchema = z.object({
   organizer: z.string().min(2, "Organizer name is required"),
   category: z.string().min(1, "Category is required"),
   capacity: z.number().min(1, "Capacity must be at least 1"),
-  thumbnailUrl: z.string().url("Must be a valid URL"),
+  thumbnailUrl: z.url("Must be a valid URL"),
 });
 
 type EventFormData = z.infer<typeof eventSchema>;
