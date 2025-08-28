@@ -10,11 +10,10 @@ type EventItemProps = {
     id: string;
     title: string;
     description?: string;
-    startsAt: string | Date;
-    endsAt?: string | Date;
+    date: string | Date;
     location: string;
     category?: string;
-    priceLabel?: string; // e.g. "Free" or "$49"
+    price?: string; // e.g. "Free" or "$49"
     thumbnailUrl?: string;
     status?: "draft" | "published";
   };
@@ -35,10 +34,10 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
   const {
     id,
     title,
-    startsAt,
+    date,
     location,
     category,
-    priceLabel,
+    price,
     thumbnailUrl,
     status = "published",
   } = event;
@@ -97,15 +96,15 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
           <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-600">
             <span className="inline-flex items-center">
               <Calendar className="mr-1 h-3.5 w-3.5 text-indigo-600" />
-              {formatDateTime(startsAt)}
+              {formatDateTime(date)}
             </span>
             <span className="inline-flex items-center min-w-0">
               <MapPin className="mr-1 h-3.5 w-3.5 text-indigo-600 flex-shrink-0" />
               <span className="truncate">{location}</span>
             </span>
-            {priceLabel && (
+            {price && (
               <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-[11px] text-gray-800">
-                {priceLabel}
+                {price}
               </span>
             )}
           </div>
@@ -141,6 +140,6 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
       </div>
     </div>
   );
-}
+};
 
 export default EventItem;

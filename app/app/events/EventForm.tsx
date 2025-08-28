@@ -13,6 +13,7 @@ const eventSchema = z.object({
   time: z.string().min(1, "Time is required"),
   location: z.string().min(3, "Location must be at least 3 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
+  price: z.number().min(0, "Price must be at least 0"),
   organizer: z.string().min(2, "Organizer name is required"),
   category: z.string().min(1, "Category is required"),
   capacity: z.number().min(1, "Capacity must be at least 1"),
@@ -23,8 +24,8 @@ type EventFormData = z.infer<typeof eventSchema>;
 
 interface EventFormProps {
   initialData?: Partial<EventFormData>;
-  onSubmit: (data: EventFormData) => void;
   onCancel?: () => void;
+  onCreate: (event: EventFormData) => void;
 }
 
 const categories = [
@@ -38,8 +39,8 @@ const categories = [
 
 export default function EventForm({
   initialData,
-  onSubmit,
   onCancel,
+  onCreate,
 }: EventFormProps) {
   const {
     register,
@@ -49,6 +50,11 @@ export default function EventForm({
     resolver: zodResolver(eventSchema),
     defaultValues: initialData || {},
   });
+
+  const onSubmit = async (data: EventFormData) => {
+    console.log(data);
+    onCreate(data);
+  };
 
   return (
     <form
@@ -88,7 +94,6 @@ export default function EventForm({
       </div>
 
       {/* Location */}
-      {/* Location */}
       <FormField
         label="Location"
         type="text"
@@ -105,6 +110,15 @@ export default function EventForm({
         rows={3}
         {...register("description")}
         error={errors.description}
+      />
+
+      {/* Price */}
+      <FormField
+        label="Price"
+        type="number"
+        placeholder="Enter Price"
+        {...register("price", { valueAsNumber: true })}
+        error={errors.price}
       />
 
       {/* Organizer */}

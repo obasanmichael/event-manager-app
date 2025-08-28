@@ -2,18 +2,35 @@
 
 import { useState } from "react";
 import { events as mockEvents, Event } from "./events";
-;
-import Link from "next/link";
 import { Button } from "@/app/components/Button";
 import EventItem from "./eventItem";
 import EventForm from "./EventForm";
 import { Plus } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
 
 const EventsPage = () => {
-    const [events] = useState<Event[]>(mockEvents);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [events, setEvents] = useState<Event[]>(mockEvents);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const hasEvents = events.length > 0;
+
+  const handleCreate = (newEvent: any) => {
+    const id = uuidv4();
+
+    // Add id + status
+    const eventWithId = {
+      ...newEvent,
+      id, // generate unique id
+      status: "published",
+    };
+
+    setEvents((prev) => [...prev, eventWithId]);
+    setIsModalOpen(false); // close modal
+  };
+
+  const handleDelete = (id: string) => {
+    setEvents((prev) => prev.filter((event) => event.id !== id));
+  };
 
   return (
     <div className="lg:p-6">
@@ -51,7 +68,7 @@ const EventsPage = () => {
         <div className=" ">
           <ul className="divide-y divide-gray-200">
             {events.map((event) => (
-              <EventItem key={event.id} event={event} />
+              <EventItem key={event.id} event={event} onDelete={handleDelete} />
             ))}
           </ul>
         </div>
@@ -60,13 +77,7 @@ const EventsPage = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
           <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
-            <EventForm
-              onSubmit={(data) => {
-                console.log(data);
-                setIsModalOpen(false);
-              }}
-              onCancel={() => setIsModalOpen(false)}
-            />
+            <EventForm onCreate={(eventData) => handleCreate(eventData)} />
           </div>
         </div>
       )}
