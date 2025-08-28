@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/app/components/Button";
 import EventItem from "./eventItem";
 import EventForm from "./EventForm";
+import { Plus } from "lucide-react";
 
 const EventsPage = () => {
     const [events] = useState<Event[]>(mockEvents);
@@ -15,7 +16,7 @@ const EventsPage = () => {
   const hasEvents = events.length > 0;
 
   return (
-    <div className="p-6">
+    <div className="lg:p-6">
       {/* Page Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Your Events</h1>
@@ -23,7 +24,10 @@ const EventsPage = () => {
           onClick={() => setIsModalOpen(true)}
           className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
         >
-          + Create Event
+          {/* Icon always visible */}
+          <Plus className="h-4 w-4" />
+          {/* Text only on medium+ screens */}
+          <span className="hidden sm:inline">Create Event</span>
         </Button>
       </div>
 
@@ -54,20 +58,15 @@ const EventsPage = () => {
       )}
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-white/30 z-50">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6">
-            {/* <h2 className="text-xl font-bold mb-4">Create New Event</h2> */}
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
             <EventForm
               onSubmit={(data) => {
                 console.log(data);
-                setIsModalOpen(false); // close modal after successful submit
+                setIsModalOpen(false);
               }}
+              onCancel={() => setIsModalOpen(false)}
             />
-            <div className="flex justify-end mt-4">
-              <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
-                Cancel
-              </Button>
-            </div>
           </div>
         </div>
       )}

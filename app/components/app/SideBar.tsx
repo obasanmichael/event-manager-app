@@ -45,12 +45,16 @@ const Sidebar = () => {
         ${collapsed ? "lg:w-20" : "lg:w-64"} 
         bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800 text-white 
         ${
-          isMobileOpen ? "translate-x-0 w-45" : "-translate-x-full lg:translate-x-0"
+          isMobileOpen
+            ? "translate-x-0 w-45"
+            : "-translate-x-full lg:translate-x-0"
         }`}
       >
-        <div className="lg:hidden flex justify-end p-4">
+        <div className="lg:hidden flex justify-between p-4">
+
+          <span className="text-xl font-bold">Me-event</span>
           <button onClick={() => setIsMobileOpen(false)}>
-            <X size={28} />
+            <X size={24} />
           </button>
         </div>
 

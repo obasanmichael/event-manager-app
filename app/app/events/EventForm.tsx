@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/app/components/Button";
+import { FormField } from "./FormField";
 
 // ✅ Zod schema
 const eventSchema = z.object({
@@ -52,138 +53,102 @@ export default function EventForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 bg-white p-6 w-full max-w-lg"
+      className="space-y-5 bg-white lg:p-6 w-full max-w-md lg:max-w-lg rounded-2xl  overflow-y-auto max-h-[85vh]"
     >
-      <h2 className="text-xl font-semibold mb-4">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">
         {initialData ? "Edit Event" : "Create Event"}
       </h2>
 
       {/* Title */}
-      <div>
-        <label className="block text-sm font-medium">Title</label>
-        <input
+      <div className="space-y-1">
+        <FormField
+          label="Title"
           type="text"
+          placeholder="Enter event title"
           {...register("title")}
-          className="w-full mt-1 p-2 border rounded-lg"
+          error={errors.title}
         />
-        {errors.title && (
-          <p className="text-red-500 text-sm">{errors.title.message}</p>
-        )}
       </div>
 
-      {/* Date */}
-      <div>
-        <label className="block text-sm font-medium">Date</label>
-        <input
+      {/* Date & Time side by side on larger screens */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          label="Date"
           type="date"
           {...register("date")}
-          className="w-full mt-1 p-2 border rounded-lg"
+          error={errors.date}
         />
-        {errors.date && (
-          <p className="text-red-500 text-sm">{errors.date.message}</p>
-        )}
-      </div>
 
-      {/* Time */}
-      <div>
-        <label className="block text-sm font-medium">Time</label>
-        <input
+        <FormField
+          label="Time"
           type="time"
           {...register("time")}
-          className="w-full mt-1 p-2 border rounded-lg"
+          error={errors.time}
         />
-        {errors.time && (
-          <p className="text-red-500 text-sm">{errors.time.message}</p>
-        )}
       </div>
 
       {/* Location */}
-      <div>
-        <label className="block text-sm font-medium">Location</label>
-        <input
-          type="text"
-          {...register("location")}
-          className="w-full mt-1 p-2 border rounded-lg"
-        />
-        {errors.location && (
-          <p className="text-red-500 text-sm">{errors.location.message}</p>
-        )}
-      </div>
+      {/* Location */}
+      <FormField
+        label="Location"
+        type="text"
+        placeholder="Enter location"
+        {...register("location")}
+        error={errors.location}
+      />
 
-      {/* Description */}
-      <div>
-        <label className="block text-sm font-medium">Description</label>
-        <textarea
-          {...register("description")}
-          className="w-full mt-1 p-2 border rounded-lg"
-          rows={3}
-        />
-        {errors.description && (
-          <p className="text-red-500 text-sm">{errors.description.message}</p>
-        )}
-      </div>
+      {/* Description (textarea) */}
+      <FormField
+        label="Description"
+        as="textarea"
+        placeholder="Enter description"
+        rows={3}
+        {...register("description")}
+        error={errors.description}
+      />
 
       {/* Organizer */}
-      <div>
-        <label className="block text-sm font-medium">Organizer</label>
-        <input
-          type="text"
-          {...register("organizer")}
-          className="w-full mt-1 p-2 border rounded-lg"
-        />
-        {errors.organizer && (
-          <p className="text-red-500 text-sm">{errors.organizer.message}</p>
-        )}
-      </div>
+      <FormField
+        label="Organizer"
+        type="text"
+        placeholder="Organizer name"
+        {...register("organizer")}
+        error={errors.organizer}
+      />
 
-      {/* Category */}
-      <div>
-        <label className="block text-sm font-medium">Category</label>
-        <select
+      {/* Category & Capacity side by side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          label="Category"
+          as="select"
+          options={[
+            { value: "", label: "Select category" },
+            ...categories.map((cat) => ({ value: cat, label: cat })),
+          ]}
           {...register("category")}
-          className="w-full mt-1 p-2 border rounded-lg"
-        >
-          <option value="">Select category</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-        {errors.category && (
-          <p className="text-red-500 text-sm">{errors.category.message}</p>
-        )}
-      </div>
+          error={errors.category}
+        />
 
-      {/* Capacity */}
-      <div>
-        <label className="block text-sm font-medium">Capacity</label>
-        <input
+        <FormField
+          label="Capacity"
           type="number"
+          placeholder="Max attendees"
           {...register("capacity", {
             valueAsNumber: true,
             setValueAs: (value) => (value === "" ? undefined : Number(value)),
           })}
-          className="w-full mt-1 p-2 border rounded-lg"
+          error={errors.capacity}
         />
-        {errors.capacity && (
-          <p className="text-red-500 text-sm">{errors.capacity.message}</p>
-        )}
       </div>
 
       {/* Thumbnail */}
-      <div>
-        <label className="block text-sm font-medium">Thumbnail URL</label>
-        <input
-          type="url"
-          {...register("thumbnailUrl")}
-          className="w-full mt-1 p-2 border rounded-lg"
-          placeholder="https://images.unsplash.com/..."
-        />
-        {errors.thumbnailUrl && (
-          <p className="text-red-500 text-sm">{errors.thumbnailUrl.message}</p>
-        )}
-      </div>
+      <FormField
+        label="Thumbnail URL"
+        type="url"
+        placeholder="https://images.unsplash.com/..."
+        {...register("thumbnailUrl")}
+        error={errors.thumbnailUrl}
+      />
 
       {/* Actions */}
       <div className="flex justify-end gap-3 pt-4">
