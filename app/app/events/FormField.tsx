@@ -28,18 +28,22 @@ export function FormField(props: FormFieldProps) {
   const { label, error, as = "input", ...rest } = props as any;
 
   return (
-    <div className="space-y-1">
-      <label className="block text-sm font-medium text-gray-700">{label}</label>
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-600">{label}</label>
 
       {as === "textarea" ? (
         <textarea
           {...(rest as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
-          className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full rounded-xl border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-800 shadow-sm 
+                 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none 
+                 transition-all duration-200 ease-in-out"
         />
       ) : as === "select" ? (
         <select
           {...(rest as React.SelectHTMLAttributes<HTMLSelectElement>)}
-          className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full rounded-xl border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-800 shadow-sm 
+                 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none 
+                 transition-all duration-200 ease-in-out"
         >
           {"options" in props &&
             props.options.map((opt) => (
@@ -51,11 +55,16 @@ export function FormField(props: FormFieldProps) {
       ) : (
         <input
           {...(rest as React.InputHTMLAttributes<HTMLInputElement>)}
-          className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full rounded-xl border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-800 shadow-sm 
+                 placeholder:text-gray-400
+                 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:bg-white focus:outline-none 
+                 transition-all duration-200 ease-in-out"
         />
       )}
 
-      {error && <p className="text-red-500 text-xs">{error.message}</p>}
+      {error && (
+        <p className="mt-1 text-xs text-red-500 font-medium">{error.message}</p>
+      )}
     </div>
   );
 }
