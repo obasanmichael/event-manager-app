@@ -45,12 +45,12 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
 
   return (
     <div
-      className="group flex items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4 hover:border-indigo-200 hover:shadow-md transition"
+      className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-indigo-200 hover:shadow-md transition"
       role="row"
     >
       {/* Left: thumb + details */}
-      <div className="flex min-w-0 items-center gap-4" role="gridcell">
-        {/* Thumbnail (optional) */}
+      <div className="flex min-w-0 items-center gap-3 sm:gap-4" role="gridcell">
+        {/* Thumbnail */}
         <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
           {thumbnailUrl ? (
             <Image
@@ -70,8 +70,8 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
 
         {/* Textual info */}
         <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <h3 className="truncate text-sm font-semibold text-gray-900">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="truncate text-sm font-semibold text-gray-900 max-w-[160px] sm:max-w-[200px]">
               {title}
             </h3>
 
@@ -86,7 +86,7 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
               {status === "published" ? "Live" : "Draft"}
             </span>
 
-            {/* Category badge (optional) */}
+            {/* Category badge */}
             {category && (
               <span className="hidden sm:inline-flex items-center rounded-full bg-blue-50 text-blue-700 px-2 py-0.5 text-[10px] font-medium">
                 {category}
@@ -113,12 +113,13 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
       </div>
 
       {/* Right: actions */}
-      <div className="flex items-center gap-2 sm:gap-3" role="gridcell">
+      <div
+        className="flex items-center gap-2 sm:gap-3 justify-end"
+        role="gridcell"
+      >
         <Link
           href={`/app/events/${id}`}
           className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
-          aria-label={`View ${title}`}
-          title="View"
         >
           <Eye className="h-4 w-4" />
         </Link>
@@ -126,8 +127,6 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
         <Link
           href={`/app/events/${id}/edit`}
           className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
-          aria-label={`Edit ${title}`}
-          title="Edit"
         >
           <Pencil className="h-4 w-4" />
         </Link>
@@ -136,8 +135,6 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
           type="button"
           onClick={() => onDelete?.(id)}
           className="inline-flex items-center rounded-md border border-red-200 bg-white px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition"
-          aria-label={`Delete ${title}`}
-          title="Delete"
         >
           <Trash2 className="h-4 w-4" />
         </button>
