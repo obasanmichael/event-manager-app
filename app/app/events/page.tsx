@@ -50,7 +50,7 @@ const EventsPage = () => {
 
       {/* Empty State */}
       {!hasEvents && (
-        <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50 rounded-lg shadow-inner">
+        <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50 rounded-lg ">
           <p className="text-gray-500 mb-4">
             You have not yet created any events.
           </p>
