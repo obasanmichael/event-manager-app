@@ -13,7 +13,7 @@ type EventItemProps = {
     date: string | Date;
     location: string;
     category?: string;
-    price?: string; // e.g. "Free" or "$49"
+    price: number; // e.g. "Free" or "$49"
     thumbnailUrl?: string;
     status?: "draft" | "published";
   };
@@ -140,6 +140,6 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default EventItem;

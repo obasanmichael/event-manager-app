@@ -25,7 +25,7 @@ type SelectFieldProps = {
 type FormFieldProps = InputFieldProps | TextareaFieldProps | SelectFieldProps;
 
 export function FormField(props: FormFieldProps) {
-  const { label, error, as = "input", ...rest } = props as any;
+  const { label, error, as = "input", ...rest } = props;
 
   return (
     <div className="space-y-2">

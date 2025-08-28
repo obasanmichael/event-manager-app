@@ -14,14 +14,14 @@ const EventsPage = () => {
 
   const hasEvents = events.length > 0;
 
-  const handleCreate = (newEvent: any) => {
+  const handleCreate = (newEvent: Omit<Event, "id" | "status" >) => {
     const id = uuidv4();
 
     // Add id + status
     const eventWithId = {
       ...newEvent,
       id, // generate unique id
-      status: "published",
+      status: "published" as const,
     };
 
     setEvents((prev) => [...prev, eventWithId]);

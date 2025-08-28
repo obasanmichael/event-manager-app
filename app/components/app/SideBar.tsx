@@ -5,9 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Home,
-  Calendar,
-  PlusCircle,
-  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,

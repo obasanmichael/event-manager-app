@@ -1,5 +1,6 @@
 // app/about/page.tsx
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About Us | Me-event",
@@ -27,7 +28,7 @@ export default function AboutPage() {
 
         {/* Image */}
         <div className="mt-10">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=1200"
             alt="Event gathering"
             className="w-full rounded-2xl shadow-lg"
