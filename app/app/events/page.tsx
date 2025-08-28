@@ -77,7 +77,10 @@ const EventsPage = () => {
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
           <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
-            <EventForm onCreate={(eventData) => handleCreate(eventData)} />
+            <EventForm
+              onCreate={(eventData) => handleCreate(eventData)}
+              onCancel={() => setIsModalOpen(false)}
+            />
           </div>
         </div>
       )}
