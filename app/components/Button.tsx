@@ -12,6 +12,8 @@ const buttonVariants = cva(
         outline:
           "border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-100",
         ghost: "bg-transparent text-gray-600 hover:bg-gray-100",
+        destructive:
+          "bg-red-600 text-white shadow hover:bg-red-700 focus:ring-red-500",
       },
       size: {
         sm: "px-3 py-1.5 text-sm",
@@ -43,3 +45,4 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
+
