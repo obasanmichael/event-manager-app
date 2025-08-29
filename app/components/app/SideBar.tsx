@@ -10,6 +10,9 @@ import {
   ChevronRight,
   X,
   Menu,
+  CalendarDays,
+  Users,
+  Settings,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -17,10 +20,10 @@ const Sidebar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const menuItems = [
-    {label: 'Dashboard', href: '/app'},
-    {label: 'My Events', href: '/app/events'},
-    {label: 'Attendees', href: '/app/create'},
-    {label: 'Settings', href: '/app/settings'},
+    {label: 'Dashboard', href: '/app', icon: Home},
+    {label: 'My Events', href: '/app/events', icon: CalendarDays},
+    {label: 'Attendees', href: '/app/attendees', icon: Users},
+    {label: 'Settings', href: '/app/settings', icon: Settings},
   ]
 
   return (
@@ -78,7 +81,7 @@ const Sidebar = () => {
                   onClick={() => setIsMobileOpen(false)}
                   key={item.href}
                   href={item.href}
-                  icon={<Home size={20} />}
+                  icon={<item.icon size={20} />}
                   label={item.label}
                   collapsed={collapsed}
                 />
