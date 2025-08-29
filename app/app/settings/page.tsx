@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { Save } from "lucide-react";
 import { Switch } from "@/app/components/Switch";
-import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/Avatar";
+import { Avatar, AvatarImage } from "@/app/components/Avatar";
 import { Label } from "@/app/components/Label";
 import { Input } from "@/app/components/Input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/Card";
 import { Button } from "@/app/components/Button";
 
 export default function SettingsPage() {
-  const [notifications, setNotifications] = useState(true);
+  const [notifications] = useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleDeleteAccount = () => {

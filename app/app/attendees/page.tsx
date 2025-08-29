@@ -25,7 +25,7 @@ const AttendeesPage = () => {
     const headers = ["ID", "Name", "Email", "Phone"];
     const rows = attendees.map((a) => [a.id, a.name, a.email, a.phone]);
 
-    let csvContent =
+    const csvContent =
       "data:text/csv;charset=utf-8," +
       [headers, ...rows].map((e) => e.join(",")).join("\n");
 

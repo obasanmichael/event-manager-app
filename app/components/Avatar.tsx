@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ReactNode } from "react";
 
 type AvatarProps = {
@@ -16,9 +17,17 @@ export const Avatar = ({ children, className = "" }: AvatarProps) => {
 };
 
 export const AvatarImage = ({ src, alt }: { src: string; alt?: string }) => (
-  <img src={src} alt={alt} className="h-full w-full object-cover" />
+  <Image
+    src={src}
+    alt={alt ?? "Avatar"}
+    fill
+    className="object-cover rounded-full" // keep it circular if used for avatars
+    sizes="(max-width: 768px) 40px, 80px" // adjust sizes for responsiveness
+    priority // eager load if it's a profile pic (can remove for lazy load)
+  />
 );
 
 export const AvatarFallback = ({ children }: { children: ReactNode }) => (
   <span className="text-sm font-medium text-gray-700">{children}</span>
+  
 );
