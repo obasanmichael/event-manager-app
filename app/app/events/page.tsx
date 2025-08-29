@@ -4,13 +4,14 @@ import { useState } from "react";
 import { events as mockEvents, Event } from "./events";
 import { Button } from "@/app/components/Button";
 import EventItem from "./eventItem";
-import EventForm from "./EventForm";
+import EventForm, { EventFormData } from "./EventForm";
 import { Plus } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>(mockEvents);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
 
   const hasEvents = events.length > 0;
 
@@ -27,10 +28,35 @@ const EventsPage = () => {
     setEvents((prev) => [...prev, eventWithId]);
     setIsModalOpen(false); // close modal
   };
+    const handleEdit = (event: Event) => {
+      setSelectedEvent(event);
+      setIsModalOpen(true);
+    };
 
   const handleDelete = (id: string) => {
     setEvents((prev) => prev.filter((event) => event.id !== id));
   };
+ 
+  const handleSave = (eventData: EventFormData) => {
+    if (selectedEvent) {
+      // Updating existing event
+      setEvents((prev) =>
+        prev.map((e) =>
+          e.id === selectedEvent.id
+            ? { ...eventData, id: e.id, status: e.status } as Event
+            : e
+        )
+      );
+      setSelectedEvent(null);
+    } else {
+      // Creating new event
+      handleCreate(eventData);
+    }
+
+    setIsModalOpen(false);
+  };
+
+
 
   return (
     <div className="lg:p-6">
@@ -68,7 +94,12 @@ const EventsPage = () => {
         <div className=" ">
           <ul className="divide-y divide-gray-200">
             {events.map((event) => (
-              <EventItem key={event.id} event={event} onDelete={handleDelete} />
+              <EventItem
+                key={event.id}
+                event={event}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
             ))}
           </ul>
         </div>
@@ -78,8 +109,9 @@ const EventsPage = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
           <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
             <EventForm
-              onCreate={(eventData) => handleCreate(eventData)}
-              onCancel={() => setIsModalOpen(false)}
+              initialData={selectedEvent || undefined}
+              onCreate={handleSave}
+              onCancel={() => (setIsModalOpen(false))}
             />
           </div>
         </div>

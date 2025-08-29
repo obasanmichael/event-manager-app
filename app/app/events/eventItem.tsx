@@ -4,21 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, Eye, Pencil, Trash2 } from "lucide-react";
 import * as React from "react";
+import { Button } from "@/app/components/Button";
+import { Event } from "./events";
 
-type EventItemProps = {
-  event: {
-    id: string;
-    title: string;
-    description?: string;
-    date: string | Date;
-    location: string;
-    category?: string;
-    price: number; // e.g. "Free" or "$49"
-    thumbnailUrl?: string;
-    status?: "draft" | "published";
-  };
-  onDelete?: (id: string) => void;
-};
+
+interface EventItemProps {
+  event: Event;
+  onDelete: (id: string) => void;
+  onEdit: (event: Event) => void;
+}
 
 function formatDateTime(d: string | Date) {
   const date = typeof d === "string" ? new Date(d) : d;
@@ -30,7 +24,7 @@ function formatDateTime(d: string | Date) {
   }).format(date);
 }
 
-const EventItem = ({ event, onDelete }: EventItemProps) => {
+const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
   const {
     id,
     title,
@@ -123,12 +117,13 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
           <Eye className="h-4 w-4" />
         </Link>
 
-        <Link
-          href={`/app/events/${id}/edit`}
-          className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
-        >
-          <Pencil className="h-4 w-4" />
-        </Link>
+
+          <Button
+            onClick={() => onEdit(event)}
+            className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
 
         <button
           type="button"
@@ -140,6 +135,6 @@ const EventItem = ({ event, onDelete }: EventItemProps) => {
       </div>
     </div>
   );
-}
+};
 
 export default EventItem;

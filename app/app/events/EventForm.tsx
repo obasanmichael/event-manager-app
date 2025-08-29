@@ -7,7 +7,7 @@ import { Button } from "@/app/components/Button";
 import { FormField } from "./FormField";
 
 // ✅ Zod schema
-const eventSchema = z.object({
+export const eventSchema = z.object({
   title: z.string().min(3, "Title must be at least 3 characters"),
   date: z.string().min(1, "Date is required"),
   time: z.string().min(1, "Time is required"),
@@ -20,7 +20,7 @@ const eventSchema = z.object({
   thumbnailUrl: z.url("Must be a valid URL"),
 });
 
-type EventFormData = z.infer<typeof eventSchema>;
+export type EventFormData = z.infer<typeof eventSchema>;
 
 interface EventFormProps {
   initialData?: Partial<EventFormData>;
