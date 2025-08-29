@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, Eye, Pencil, Trash2 } from "lucide-react";
@@ -7,21 +6,32 @@ import * as React from "react";
 import { Button } from "@/app/components/Button";
 import { Event } from "./events";
 
-
 interface EventItemProps {
   event: Event;
   onDelete: (id: string) => void;
   onEdit: (event: Event) => void;
 }
 
-function formatDateTime(d: string | Date) {
-  const date = typeof d === "string" ? new Date(d) : d;
+/** Format a proper date-time */
+export function formatDate(dateStr: string) {
+  const date = new Date(dateStr);
   return new Intl.DateTimeFormat(undefined, {
+    year: "numeric",
     month: "short",
     day: "numeric",
+  }).format(date);
+}
+
+export function formatTime(timeStr: string) {
+  // Use today's date just to attach the time
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const tempDate = new Date();
+  tempDate.setHours(hours, minutes);
+
+  return new Intl.DateTimeFormat(undefined, {
     hour: "2-digit",
     minute: "2-digit",
-  }).format(date);
+  }).format(tempDate);
 }
 
 const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
@@ -29,6 +39,7 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
     id,
     title,
     date,
+    time,// now a Date or ISO string
     location,
     category,
     price,
@@ -90,15 +101,15 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
           <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-600">
             <span className="inline-flex items-center">
               <Calendar className="mr-1 h-3.5 w-3.5 text-indigo-600" />
-              {formatDateTime(date)}
+              {formatDate(date)} {formatTime(time)}
             </span>
             <span className="inline-flex items-center min-w-0">
               <MapPin className="mr-1 h-3.5 w-3.5 text-indigo-600 flex-shrink-0" />
               <span className="truncate">{location}</span>
             </span>
-            {price && (
+            {price !== undefined && (
               <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-[11px] text-gray-800">
-                {price}
+                ${price}
               </span>
             )}
           </div>
@@ -117,13 +128,12 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
           <Eye className="h-4 w-4" />
         </Link>
 
-
-          <Button
-            onClick={() => onEdit(event)}
-            className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
-          >
-            <Pencil className="h-4 w-4" />
-          </Button>
+        <Button
+          onClick={() => onEdit(event)}
+          className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
+        >
+          <Pencil className="h-4 w-4" />
+        </Button>
 
         <button
           type="button"

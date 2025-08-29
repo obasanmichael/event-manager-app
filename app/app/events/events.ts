@@ -36,8 +36,7 @@ export const events: Event[] = [
     date: "2025-09-20",
     time: "18:00",
     location: "Abuja, Nigeria",
-    description:
-      "An exciting festival featuring top artists from around Africa.",
+    description: "An exciting festival featuring top artists from around Africa.",
     price: 0, // use 0 for free events
     organizer: "Abuja Entertainment Group",
     category: "Entertainment",
