@@ -41,7 +41,7 @@ export default function DashboardPage() {
       {/* Grid: 12 cols on desktop → 2-column layout */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Left column */}
-        <div className="xl:col-span-7 space-y-6">
+        <div className="xl:col-span-6 space-y-6">
           <WelcomeCard
             userName="Tolu Obasan"
             email="tolu@example.com"
@@ -55,7 +55,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Right column */}
-        <div className="xl:col-span-5">
+        <div className="xl:col-span-6">
           <TrendsCard data={trendData} />
         </div>
       </div>
