@@ -27,11 +27,12 @@ export default function AboutPage() {
         </p>
 
         {/* Image */}
-        <div className="mt-10">
+        <div className="mt-10 relative w-full h-80 md:h-[500px]">
           <Image
             src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=1200"
             alt="Event gathering"
             className="w-full rounded-2xl shadow-lg"
+            fill
           />
         </div>
 
