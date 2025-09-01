@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 // Define validation schema
 const signupSchema = z
@@ -30,6 +31,7 @@ const signupSchema = z
 type SignupFormData = z.infer<typeof signupSchema>;
 
 const SignupPage = () => {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -42,9 +44,11 @@ const SignupPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
 
   const onSubmit = async (data: SignupFormData) => {
     console.log("Signup data:", data);
+    router.push('/app')
     // Call API here
   };
 
