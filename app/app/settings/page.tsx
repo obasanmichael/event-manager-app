@@ -20,7 +20,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="max-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="max-h-screen bg-gray-50 lg:p-8 px-4">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Profile Section */}
         <Card className="shadow-md rounded-2xl overflow-hidden">

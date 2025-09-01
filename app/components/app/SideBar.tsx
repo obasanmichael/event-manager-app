@@ -28,7 +28,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="lg:hidden shadow-sm p-2 ">
+      <div className="lg:hidden pt-2 pl-4 fixed w-full bg-gray-50 z-50">
         <button onClick={() => setIsMobileOpen(true)}>
           <Menu size={24} />
         </button>
@@ -42,7 +42,7 @@ const Sidebar = () => {
       )}
       <div
         className={`h-screen lg:relative fixed top-0 left-0 z-50 transition-all duration-300 flex flex-col
-        ${collapsed ? "lg:w-20" : "lg:w-64"} 
+        ${collapsed ? "lg:w-15" : "lg:w-64"} 
         bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800 text-white 
         ${
           isMobileOpen

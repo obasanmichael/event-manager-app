@@ -37,7 +37,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="p-4 lg:p-6 space-y-6">
+    <div className="px-4 lg:p-6 space-y-6">
       {/* Grid: 12 cols on desktop → 2-column layout */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Left column */}

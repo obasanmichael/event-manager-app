@@ -21,9 +21,9 @@ export const AvatarImage = ({ src, alt }: { src: string; alt?: string }) => (
     src={src}
     alt={alt ?? "Avatar"}
     fill
-    className="object-cover rounded-full" // keep it circular if used for avatars
-    sizes="(max-width: 768px) 40px, 80px" // adjust sizes for responsiveness
-    priority // eager load if it's a profile pic (can remove for lazy load)
+    className="object-cover rounded-full" 
+    sizes="(max-width: 768px) 40px, 80px" 
+    priority 
   />
 );
 
