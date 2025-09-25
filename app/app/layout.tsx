@@ -12,10 +12,7 @@ export default function DashboardLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex min-h-screen`}>
-        {/* Sidebar */}
         <SideBar />
-
-        {/* Main Content */}
         <main className="flex-1 pt-10 bg-gray-50">{children}</main>
       </body>
     </html>

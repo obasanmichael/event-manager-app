@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { Search, Filter, X } from "lucide-react";
-import EventCard from "../../components/landingpage/EventCard";
+import EventCard from "../../components/marketing/EventCard";
 
 export default function EventsPage() {
   const [activeFilter, setActiveFilter] = useState("All");

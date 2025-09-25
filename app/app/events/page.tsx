@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { events as mockEvents, Event } from "./events";
-import { Button } from "@/app/components/Button";
+import { Button } from "@/app/components/ui/Button";
 import EventItem from "./eventItem";
 import EventForm, { EventFormData } from "./EventForm";
 import { Plus } from "lucide-react";
@@ -83,8 +83,8 @@ const EventsPage = () => {
           </p>
           <Button
             onClick={() => {
-              setSelectedEvent(null)
-              setIsModalOpen(true)
+              setSelectedEvent(null);
+              setIsModalOpen(true);
             }}
             className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
           >

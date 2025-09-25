@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, Eye, Pencil, Trash2 } from "lucide-react";
 import * as React from "react";
-import { Button } from "@/app/components/Button";
+import { Button } from "@/app/components/ui/Button";
 import { Event } from "./events";
 
 interface EventItemProps {
@@ -39,7 +39,7 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
     id,
     title,
     date,
-    time,// now a Date or ISO string
+    time, // now a Date or ISO string
     location,
     category,
     price,

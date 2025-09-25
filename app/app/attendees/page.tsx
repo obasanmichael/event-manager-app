@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Attendee } from "./attendees";
 import AttendeeList from "./AttendeeList";
-import { Button } from "@/app/components/Button";
+import { Button } from "@/app/components/ui/Button";
 
 const AttendeesPage = () => {
   const [attendees] = useState<Attendee[]>([

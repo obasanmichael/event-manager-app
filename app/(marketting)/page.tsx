@@ -1,6 +1,6 @@
-import { FeaturedEvents } from "../components/landingpage/FeaturedEvents";
-import { Hero } from "../components/landingpage/Hero";
-import { SearchBar } from "../components/landingpage/SearchBar";
+import { FeaturedEvents } from "../components/marketing/FeaturedEvents";
+import { Hero } from "../components/marketing/Hero";
+import { SearchBar } from "../components/marketing/SearchBar";
 
 export default function HomePage() {
   return (

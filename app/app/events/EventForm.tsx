@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/app/components/Button";
+import { Button } from "@/app/components/ui/Button";
 import { FormField } from "./FormField";
 
 // ✅ Zod schema

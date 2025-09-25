@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@/app/components/Card";
+import { Card, CardContent } from "@/app/components/ui/Card";
 import { ReactNode } from "react";
 
 type StatCardProps = {

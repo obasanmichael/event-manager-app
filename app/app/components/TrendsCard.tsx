@@ -5,15 +5,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/app/components/Card";
-import {
-  ResponsiveContainer,
-  Tooltip,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-} from "recharts";
+} from "@/app/components/ui/Card";
+import { ResponsiveContainer, Tooltip, PieChart, Pie, Cell } from "recharts";
 
 type TrendsCardProps = {
   data: { label: string; attendees: number }[];

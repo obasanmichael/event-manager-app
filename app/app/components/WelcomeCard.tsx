@@ -1,8 +1,16 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/Avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/Card";
-
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/app/components/ui/Avatar";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/ui/Card";
 
 type WelcomeCardProps = {
   userName: string;
