@@ -6,7 +6,7 @@ import StatsGrid from "./components/StatsGrid";
 import TrendsCard from "./components/TrendsCard";
 
 // If you already have real data in app state or props, replace these mocks:
-import { events as mockEvents } from "./events/events"; // your existing events seed
+import { eventsCreated as mockEvents } from "./events/events"; // your existing events seed
 // Optionally import attendees aggregate from your store later
 
 export default function DashboardPage() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { events as mockEvents, Event } from "./events";
+import { eventsCreated as mockEvents, Event } from "./events";
 import { Button } from "@/app/components/ui/Button";
 import EventItem from "./eventItem";
 import EventForm, { EventFormData } from "./EventForm";
