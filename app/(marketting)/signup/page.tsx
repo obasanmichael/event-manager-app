@@ -6,6 +6,8 @@ import { z } from "zod";
 import { Eye, EyeOff, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signUpWithEmail } from "@/lib/auth";
+import toast from "react-hot-toast";
 
 // Define validation schema
 const signupSchema = z
@@ -48,8 +50,15 @@ const SignupPage = () => {
 
   const onSubmit = async (data: SignupFormData) => {
     console.log("Signup data:", data);
-    router.push('/app')
-    // Call API here
+
+    try {
+      await signUpWithEmail(data.email, data.password, data.fullName);
+      toast.success('Account created successfully!')
+      router.push('/app')
+    }
+    catch (err) {
+      toast.error((err as Error).message)
+    }
   };
 
   const password = watch("password");

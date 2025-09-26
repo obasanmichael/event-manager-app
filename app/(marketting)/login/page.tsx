@@ -1,10 +1,12 @@
 "use client";
+import { signInWithEmail, signInWithFacebook, signInWithGoogle } from "@/lib/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 // ✅ Zod schema
@@ -19,7 +21,6 @@ type LoginFormData = z.infer<typeof loginSchema>;
 const LoginPage = () => {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -31,16 +32,20 @@ const LoginPage = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     console.log("login data:", data);
-    // Call your API here
-
-    router.push('/app')
+    try {
+      await signInWithEmail(data.email, data.password);
+      toast.success("Logged in successfully!");
+      router.push('/app')
+    }
+    catch (err) {
+      toast.error((err as Error).message)
+    }
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <div className=" flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
-          {/* Header */}
           <div className="text-center ">
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
               Welcome back
@@ -50,10 +55,8 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Form container */}
           <div className="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
@@ -75,8 +78,6 @@ const LoginPage = () => {
                   )}
                 </div>
               </div>
-
-              {/* Password */}
               <div>
                 <label
                   htmlFor="password"
@@ -109,8 +110,6 @@ const LoginPage = () => {
                   </p>
                 )}
               </div>
-
-              {/* Remember me + Forgot password */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
@@ -135,8 +134,6 @@ const LoginPage = () => {
                   </Link>
                 </div>
               </div>
-
-              {/* Submit button */}
               <div>
                 <button
                   type="submit"
@@ -148,8 +145,6 @@ const LoginPage = () => {
                 </button>
               </div>
             </form>
-
-            {/* Divider */}
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
@@ -166,6 +161,7 @@ const LoginPage = () => {
               <div className="mt-6 grid grid-cols-2 gap-3">
                 <button
                   type="button"
+                  onClick={()=> signInWithGoogle()}
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   <svg
@@ -179,6 +175,7 @@ const LoginPage = () => {
                 </button>
                 <button
                   type="button"
+                  onClick={()=> signInWithFacebook()}
                   className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                   <svg

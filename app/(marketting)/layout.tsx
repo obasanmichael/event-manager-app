@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Navbar from "../components/marketing/Navbar";
 import { Footer } from "../components/marketing/Footer";
+import { ToasterProvider } from "../providers/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Navbar />
         <main className="flex-1">{children}</main>
+        <ToasterProvider />
         <Footer />
       </body>
     </html>

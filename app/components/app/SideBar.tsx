@@ -14,6 +14,7 @@ import {
   Users,
   Settings,
 } from "lucide-react";
+import { signOut } from "@/lib/auth";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -92,7 +93,10 @@ const Sidebar = () => {
           {/* Logout at bottom */}
           <div className="mb-6">
             <SidebarLink
-              onClick={() => setIsMobileOpen(false)}
+              onClick={() => {
+                signOut()
+                setIsMobileOpen(false)
+              }}
               href="/login"
               icon={<LogOut size={20} />}
               label="Logout"
