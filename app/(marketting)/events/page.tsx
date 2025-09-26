@@ -17,6 +17,7 @@ export default function EventsPage() {
     "Sport",
     "Networking",
     "Food & Drink",
+    "Business"
   ];
 
   
