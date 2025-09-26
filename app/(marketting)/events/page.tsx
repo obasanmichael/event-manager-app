@@ -6,37 +6,18 @@ import { Search, Filter, X } from "lucide-react";
 import EventCard from "../../components/marketing/EventCard";
 
 export default function EventsPage() {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const [showFilters, setShowFilters] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories = [
     "All",
-    "Concerts",
-    "Conferences",
-    "Workshops",
-    "Exhibitions",
-    "Sports",
+    "Concert",
+    "Conference",
+    "Workshop",
+    "Exhibition",
+    "Sport",
     "Networking",
     "Food & Drink",
-  ];
-
-  const priceRanges = [
-    { label: "Any Price", value: "any" },
-    { label: "Free", value: "free" },
-    { label: "Under $50", value: "under-50" },
-    { label: "$50 - $100", value: "50-100" },
-    { label: "$100 - $200", value: "100-200" },
-    { label: "$200+", value: "200-plus" },
-  ];
-
-  const dateRanges = [
-    { label: "Any Date", value: "any" },
-    { label: "Today", value: "today" },
-    { label: "Tomorrow", value: "tomorrow" },
-    { label: "This Weekend", value: "weekend" },
-    { label: "This Week", value: "week" },
-    { label: "This Month", value: "month" },
   ];
 
   const events = [
@@ -173,6 +154,11 @@ export default function EventsPage() {
       category: "Exhibition",
     },
   ];
+  const filterdEvents = events
+    .filter((e) =>
+      activeFilter === "All" ? true : e.category === activeFilter
+    )
+    .filter((e) => e.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -199,96 +185,7 @@ export default function EventsPage() {
                   className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 outline-none transition-all"
                 />
               </div>
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center justify-center px-4 py-3 bg-white border border-gray-200 rounded-lg hover:border-gray-300 focus:outline-none"
-              >
-                <Filter className="h-5 w-5 text-gray-500 mr-2" />
-                <span className="text-gray-700">Filters</span>
-              </button>
             </div>
-
-            {/* Expanded Filters */}
-            {showFilters && (
-              <div className="mt-4 bg-white border border-gray-200 rounded-lg p-4 shadow-lg">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-medium text-gray-900">Filters</h3>
-                  <button
-                    onClick={() => setShowFilters(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* Price Range */}
-                  <div>
-                    <h4 className="font-medium text-gray-700 mb-2">
-                      Price Range
-                    </h4>
-                    <div className="space-y-2">
-                      {priceRanges.map((price) => (
-                        <label key={price.value} className="flex items-center">
-                          <input
-                            type="radio"
-                            name="price"
-                            value={price.value}
-                            className="h-4 w-4 text-primary focus:ring-primary"
-                          />
-                          <span className="ml-2 text-gray-700">
-                            {price.label}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Date Range */}
-                  <div>
-                    <h4 className="font-medium text-gray-700 mb-2">Date</h4>
-                    <div className="space-y-2">
-                      {dateRanges.map((date) => (
-                        <label key={date.value} className="flex items-center">
-                          <input
-                            type="radio"
-                            name="date"
-                            value={date.value}
-                            className="h-4 w-4 text-primary focus:ring-primary"
-                          />
-                          <span className="ml-2 text-gray-700">
-                            {date.label}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  {/* Event Format */}
-                  <div>
-                    <h4 className="font-medium text-gray-700 mb-2">
-                      Event Format
-                    </h4>
-                    <div className="space-y-2">
-                      {["In-Person", "Virtual", "Hybrid"].map((format) => (
-                        <label key={format} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 text-primary focus:ring-primary"
-                          />
-                          <span className="ml-2 text-gray-700">{format}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-end mt-6 space-x-3">
-                  <button className="px-4 py-2 text-gray-700 hover:text-gray-900 text-sm font-medium">
-                    Clear All
-                  </button>
-                  <button className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded text-sm font-medium">
-                    Apply Filters
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Category Pills */}
@@ -314,9 +211,15 @@ export default function EventsPage() {
       <div className="flex-grow py-8 md:py-12">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {events.map((event) => (
-              <EventCard key={event.id} {...event} />
-            ))}
+            {filterdEvents.length > 0 ? (
+              filterdEvents.map((event) => (
+                <EventCard key={event.id} {...event} />
+              ))
+            ) : (
+              <p className="col-span-full text-center text-gray-500">
+                No events match your search.
+              </p>
+            )}
           </div>
 
           {/* Pagination */}
