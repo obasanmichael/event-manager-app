@@ -1,20 +1,21 @@
 "use client";
-import {  Menu, X } from "lucide-react";
+import useProfileStore from "@/app/stores/profile/store";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
-    const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { profile } = useProfileStore();
+  const pathname = usePathname();
+  const transparentPages = ["/", "/contact"];
+  const isTransparentPage = transparentPages.includes(pathname);
 
-    const transparentPages = ['/', '/contact']
-    const isTransparentPage = transparentPages.includes(pathname)
-
-    useEffect(() => {
-        if (!isTransparentPage) return; 
-
+  useEffect(() => {
+    if (!isTransparentPage) return;
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -29,22 +30,21 @@ const Navbar = () => {
     {
       name: "Events",
       href: "/events",
-      
     },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
-    
-    const navbarClasses = isTransparentPage
-      ? isScrolled
-        ? "bg-white shadow-md py-3"
-        : "bg-transparent py-5"
-      : "bg-white shadow-md py-3";
 
-    const linkClasses = (base: string) =>
-      isTransparentPage && !isScrolled
-        ? `${base} text-white`
-        : `${base} text-gray-700 hover:text-blue-500`;
+  const navbarClasses = isTransparentPage
+    ? isScrolled
+      ? "bg-white shadow-md py-3"
+      : "bg-transparent py-5"
+    : "bg-white shadow-md py-3";
+
+  const linkClasses = (base: string) =>
+    isTransparentPage && !isScrolled
+      ? `${base} text-white`
+      : `${base} text-gray-700 hover:text-blue-500`;
 
   return (
     <nav
@@ -82,20 +82,26 @@ const Navbar = () => {
               ))}
             </div>
             {/* Auth Buttons */}
-            <div className="flex items-center space-x-4">
-              <a
-                href="/login"
-                className={linkClasses("text-sm font-medium transition-colors")}
-              >
-                Log in
-              </a>
-              <Link
-                href="/signup"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                Sign up
-              </Link>
-            </div>
+            {profile ? (
+              <UserMenu />
+            ) : (
+              <div className="flex items-center space-x-4">
+                <a
+                  href="/login"
+                  className={linkClasses(
+                    "text-sm font-medium transition-colors"
+                  )}
+                >
+                  Log in
+                </a>
+                <Link
+                  href="/signup"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Sign up
+                </Link>
+              </div>
+            )}
           </div>
           {/* Mobile Menu Button */}
           <div className="md:hidden">

@@ -54,7 +54,7 @@ const SignupPage = () => {
     try {
       await signUpWithEmail(data.email, data.password, data.fullName);
       toast.success('Account created successfully!')
-      router.push('/app')
+      router.push('/login')
     }
     catch (err) {
       toast.error((err as Error).message)
