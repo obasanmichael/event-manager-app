@@ -28,14 +28,17 @@ interface EventFormProps {
   onCreate: (event: EventFormData) => void;
 }
 
-const categories = [
-  "Conference",
-  "Workshop",
-  "Meetup",
-  "Festival",
-  "Networking",
-  "Other",
-];
+ const categories = [
+   "All",
+   "Concert",
+   "Conference",
+   "Workshop",
+   "Exhibition",
+   "Sport",
+   "Networking",
+   "Food & Drink",
+   "Business",
+ ];
 
 export default function EventForm({
   initialData,
@@ -102,15 +105,7 @@ export default function EventForm({
         error={errors.location}
       />
 
-      {/* Description (textarea) */}
-      <FormField
-        label="Description"
-        as="textarea"
-        placeholder="Enter description"
-        rows={3}
-        {...register("description")}
-        error={errors.description}
-      />
+    
 
       {/* Price */}
       <FormField
@@ -122,13 +117,7 @@ export default function EventForm({
       />
 
       {/* Organizer */}
-      <FormField
-        label="Organizer"
-        type="text"
-        placeholder="Organizer name"
-        {...register("organizer")}
-        error={errors.organizer}
-      />
+      
 
       {/* Category & Capacity side by side */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -143,16 +132,7 @@ export default function EventForm({
           error={errors.category}
         />
 
-        <FormField
-          label="Capacity"
-          type="number"
-          placeholder="Max attendees"
-          {...register("capacity", {
-            valueAsNumber: true,
-            setValueAs: (value) => (value === "" ? undefined : Number(value)),
-          })}
-          error={errors.capacity}
-        />
+       
       </div>
 
       {/* Thumbnail */}

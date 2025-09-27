@@ -35,7 +35,7 @@ const LoginPage = () => {
     try {
       await signInWithEmail(data.email, data.password);
       toast.success("Logged in successfully!");
-      router.push('/app')
+      router.push('/')
     }
     catch (err) {
       toast.error((err as Error).message)

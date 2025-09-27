@@ -4,6 +4,7 @@ import "../globals.css";
 import Navbar from "../components/marketing/Navbar";
 import { Footer } from "../components/marketing/Footer";
 import { ToasterProvider } from "../providers/ToastProvider";
+import AuthListener from "../components/AuthListener";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <AuthListener />
         <Navbar />
         <main className="flex-1">{children}</main>
         <ToasterProvider />
