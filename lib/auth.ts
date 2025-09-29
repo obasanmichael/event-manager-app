@@ -20,7 +20,7 @@ export async function signUpWithEmail(
   const user = authData.user;
   if (!user) return;
 
-   await supabase.from("profiles").upsert([
+  await supabase.from("profiles").upsert([
     {
       id: user.id,
       email: user.email,
@@ -65,6 +65,10 @@ export async function signInWithFacebook() {
   });
   if (error) throw error;
   return data;
+}
+
+export async function getUserSession() {
+  return supabase.auth.getUser();
 }
 
 export async function signOut() {

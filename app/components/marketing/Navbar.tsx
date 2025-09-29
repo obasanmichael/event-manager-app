@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import UserMenu from "./UserMenu";
+import { signOut } from "@/lib/auth";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -130,27 +131,33 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-blue-500 py-2 text-sm font-medium"
+                  className="text-gray-700 hover:text-blue-500 py-2 text-sm text-center font-medium"
                 >
                   {link.name}
                 </Link>
               ))}
 
-              <hr className="my-1" />
-              <Link
-                href="/login"
-                className="text-gray-700 hover:text-blue-500 py-2 text-sm font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Log in
-              </Link>
-              <Link
-                href="/signup"
-                onClick={() => setMobileMenuOpen(false)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
-              >
-                Sign up
-              </Link>
+              <hr className="" />
+              {profile ? (
+                <button onClick={() => signOut()} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center">Logout</button>
+              ) : (
+                <div className="flex flex-col space-y-2">
+                  <Link
+                    href="/login"
+                    className="text-gray-700 hover:text-blue-500 py-2 text-center text-sm font-medium"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium text-center"
+                  >
+                    Sign up
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -1,11 +1,13 @@
-"use client"
+"use client";
 import React from "react";
 import { CalendarIcon, MapPinIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import useProfileStore from "@/app/stores/profile/store";
 
 const Hero = () => {
   const router = useRouter();
+  const { profile } = useProfileStore();
   return (
     <div className="relative w-full bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800 overflow-hidden">
       {/* Abstract Background Elements */}
@@ -24,11 +26,19 @@ const Hero = () => {
             Seamlessly host, discover, and attend events that matter.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 bg-white text-blue-800 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center">
+            <button
+              onClick={() => {
+                router.push(profile ? "/app" : "/login");
+              }}
+              className="px-8 py-3 bg-white text-blue-800 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center"
+            >
               <CalendarIcon className="w-5 h-5 mr-2" />
               Host an Event
             </button>
-            <button onClick={() => router.push('/events')} className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-colors flex items-center justify-center">
+            <button
+              onClick={() => router.push("/events")}
+              className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-lg font-medium hover:bg-white/10 transition-colors flex items-center justify-center"
+            >
               <MapPinIcon className="w-5 h-5 mr-2" />
               Explore Events
             </button>
@@ -72,6 +82,6 @@ const Hero = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Hero;

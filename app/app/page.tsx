@@ -4,29 +4,20 @@ import { useMemo } from "react";
 import WelcomeCard from "./components/WelcomeCard";
 import StatsGrid from "./components/StatsGrid";
 import TrendsCard from "./components/TrendsCard";
+import { eventsCreated as mockEvents } from "./events/events";
 
-// If you already have real data in app state or props, replace these mocks:
-import { eventsCreated as mockEvents } from "./events/events"; // your existing events seed
-// Optionally import attendees aggregate from your store later
-
-export default function DashboardPage() {
-  // === Derive metrics from your current mockEvents (replace with real queries later) ===
+export default async function DashboardPage() {
   const { totalEvents, upcomingEvents } = useMemo(() => {
     const now = new Date();
     const total = mockEvents.length;
     const upcoming = mockEvents.filter((e) => {
-      // date is "YYYY-MM-DD" in your model
       const d = new Date(`${e.date}T${e.time || "00:00"}`);
       return d >= now;
     }).length;
 
     return { totalEvents: total, upcomingEvents: upcoming };
   }, []);
-
-  // If you have attendees per event, sum them here; using a placeholder for now:
-  const activeAttendees = 248; // replace with real aggregation later
-
-  // Trends mock: attendees per month (replace with real analytics)
+  const activeAttendees = 248;
   const trendData = [
     { label: "Mar", attendees: 120 },
     { label: "Apr", attendees: 160 },
