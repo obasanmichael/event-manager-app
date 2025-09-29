@@ -6,7 +6,7 @@ import StatsGrid from "./components/StatsGrid";
 import TrendsCard from "./components/TrendsCard";
 import { eventsCreated as mockEvents } from "./events/events";
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
   const { totalEvents, upcomingEvents } = useMemo(() => {
     const now = new Date();
     const total = mockEvents.length;
