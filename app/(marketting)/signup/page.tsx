@@ -49,8 +49,6 @@ const SignupPage = () => {
   
 
   const onSubmit = async (data: SignupFormData) => {
-    console.log("Signup data:", data);
-
     try {
       await signUpWithEmail(data.email, data.password, data.fullName);
       toast.success('Account created successfully!')

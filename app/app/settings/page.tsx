@@ -19,7 +19,6 @@ export default function SettingsPage() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleDeleteAccount = () => {
-    // 🔥 Hook this up to your backend delete logic
     console.log("Account deleted!");
     setDeleteModalOpen(false);
   };

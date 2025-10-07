@@ -31,7 +31,6 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log("login data:", data);
     try {
       await signInWithEmail(data.email, data.password);
       toast.success("Logged in successfully!");

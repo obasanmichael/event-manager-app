@@ -13,6 +13,7 @@ import {
   CalendarDays,
   Users,
   Settings,
+  HomeIcon,
 } from "lucide-react";
 import { signOut } from "@/lib/auth";
 
@@ -25,6 +26,7 @@ const Sidebar = () => {
     {label: 'My Events', href: '/app/events', icon: CalendarDays},
     {label: 'Attendees', href: '/app/attendees', icon: Users},
     {label: 'Settings', href: '/app/settings', icon: Settings},
+    {label: 'Go Home', href: '/', icon: HomeIcon},
   ]
 
   return (

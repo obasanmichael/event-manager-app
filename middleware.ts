@@ -26,18 +26,12 @@ export async function middleware(req: NextRequest) {
     error,
   } = await supabase.auth.getSession();
 
-   console.log("🔎 Middleware debug");
-   console.log("Path:", req.nextUrl.pathname);
-   console.log("Cookies in request:", req.cookies.getAll());
-   console.log("Supabase session:", session);
-   console.log("Supabase error:", error);
+   
 
    if (!session) {
-     console.log("⛔ No session found → redirecting to /login");
      return NextResponse.redirect(new URL("/login", req.url));
    }
 
-   console.log("✅ Session found → allow access");
    return res;
 }
 

@@ -17,10 +17,10 @@ export default function EventsPage() {
     "Sport",
     "Networking",
     "Food & Drink",
-    "Business"
+    "Business",
+    "Entertainment",
   ];
 
-  
   const filterdEvents = events
     .filter((e) =>
       activeFilter === "All" ? true : e.category === activeFilter

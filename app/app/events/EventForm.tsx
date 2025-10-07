@@ -55,7 +55,6 @@ export default function EventForm({
   });
 
   const onSubmit = async (data: EventFormData) => {
-    console.log(data);
     onCreate(data);
   };
 
