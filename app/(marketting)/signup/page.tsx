@@ -12,7 +12,8 @@ import toast from "react-hot-toast";
 // Define validation schema
 const signupSchema = z
   .object({
-    fullName: z.string().min(2, "Full name must be at least 2 characters"),
+    firstName: z.string().min(2, "First name must be at least 2 characters"),
+    lastName: z.string().min(2, "Last name must be at least 2 characters"),
     email: z.string().email("Invalid email address"),
     password: z
       .string()
@@ -50,7 +51,7 @@ const SignupPage = () => {
 
   const onSubmit = async (data: SignupFormData) => {
     try {
-      await signUpWithEmail(data.email, data.password, data.fullName);
+      await signUpWithEmail(data.email, data.password, data.firstName, data.lastName);
       toast.success('Account created successfully!')
       router.push('/login')
     }
@@ -86,21 +87,39 @@ const SignupPage = () => {
           <div className="mt-8 bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               {/* Full Name */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  {...register("fullName")}
-                  className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm sm:text-sm
-                    focus:outline-none focus:ring-blue-500 focus:border-blue-500
-                    border-gray-300"
-                />
-                {errors.fullName && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.fullName.message}
-                  </p>
-                )}
+              <div className="flex flex-row gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    First Name
+                  </label>
+                  <input
+                    {...register("firstName")}
+                    className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm sm:text-sm
+                      focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                      border-gray-300"
+                  />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.firstName.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Last Name
+                  </label>
+                  <input
+                    {...register("lastName")}
+                    className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm sm:text-sm
+                      focus:outline-none focus:ring-blue-500 focus:border-blue-500
+                      border-gray-300"
+                  />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.lastName.message}
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Email */}

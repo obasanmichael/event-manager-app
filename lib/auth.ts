@@ -5,14 +5,16 @@ import { supabase } from "./supabase/client";
 export async function signUpWithEmail(
   email: string,
   password: string,
-  name: string
+  fName: string,
+  lName: string,
 ) {
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
-        full_name: name,
+        first_name: fName,
+        last_name: lName,
       },
     },
   });
@@ -24,7 +26,9 @@ export async function signUpWithEmail(
     {
       id: user.id,
       email: user.email,
-      display_name: name,
+      first_name: fName,
+      last_name: lName,
+      display_name: `${fName} ${lName}`,
       is_buyer: true,
       is_seller: false,
     },

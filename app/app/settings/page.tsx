@@ -13,8 +13,10 @@ import {
   CardTitle,
 } from "@/app/components/ui/Card";
 import { Button } from "@/app/components/ui/Button";
+import useProfileStore from "@/app/stores/profile/store";
 
 export default function SettingsPage() {
+  const { profile } = useProfileStore();
   const [notifications] = useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -43,13 +45,19 @@ export default function SettingsPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" placeholder="Michael Obs" />
+              <div className="flex flex-row gap-3">
+                <div>
+                  <Label htmlFor="name">First Name</Label>
+                  <Input id="name" placeholder={profile?.first_name} />
+                </div>
+                <div>
+                  <Label htmlFor="name">Last Name</Label>
+                  <Input id="name" placeholder={profile?.last_name} />
+                </div>
               </div>
               <div>
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="obs@example.com" />
+                <Input id="email" type="email" placeholder={profile?.email} />
               </div>
               <div>
                 <Label htmlFor="phone">Phone Number</Label>

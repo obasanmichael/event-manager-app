@@ -5,8 +5,10 @@ import WelcomeCard from "./components/WelcomeCard";
 import StatsGrid from "./components/StatsGrid";
 import TrendsCard from "./components/TrendsCard";
 import { eventsCreated as mockEvents } from "./events/events";
+import useProfileStore from "../stores/profile/store";
 
 export default function DashboardPage() {
+  const { profile } = useProfileStore();
   const { totalEvents, upcomingEvents } = useMemo(() => {
     const now = new Date();
     const total = mockEvents.length;
@@ -34,8 +36,8 @@ export default function DashboardPage() {
         {/* Left column */}
         <div className="xl:col-span-6 space-y-6">
           <WelcomeCard
-            userName="Tolu Obasan"
-            email="tolu@example.com"
+            userName= {`${profile?.first_name} ${profile?.last_name}`}
+            email={profile?.email}
             avatarUrl=""
           />
           <StatsGrid

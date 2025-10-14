@@ -10,7 +10,7 @@ const UserMenu = () => {
   if (!profile) return null;
 
   const initial =
-    profile.display_name?.charAt(0).toUpperCase() ||
+    profile.first_name?.charAt(0).toUpperCase() ||
     profile.email?.charAt(0).toUpperCase() ||
     "?";
 
