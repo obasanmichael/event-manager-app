@@ -18,7 +18,7 @@ import useEventStore from "../stores/event/store";
     try {
       const { data: created, error } = await EventsService.create({
         ...data,
-        status: "published",
+        published: true,
       });
       if (error) throw error;
       addEvent(created![0]);
