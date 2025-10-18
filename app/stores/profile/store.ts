@@ -4,6 +4,8 @@ import { create } from "zustand";
 type Profile = {
     id: string;
     email: string;
+    first_name?: string;
+    last_name?: string;
     display_name?: string;
     avatar_url?: string;
     is_buyer?: boolean;
