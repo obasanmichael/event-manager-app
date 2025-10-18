@@ -1,30 +1,61 @@
 "use client";
 
 import { useState } from "react";
-import { eventsCreated as mockEvents, Event, events } from "./events";
+import { eventsCreated as mockEvents, Event } from "./events";
 import { Button } from "@/app/components/ui/Button";
 import EventItem from "./eventItem";
 import EventForm, { EventFormData } from "./EventForm";
 import { Plus } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
-import toast from "react-hot-toast";
-import { EventsService } from "@/app/services/eventsService";
-import useEventStore from "@/app/stores/event/store";
-import useEventActions from "@/app/hooks/useEventActions";
 
 const EventsPage = () => {
-  const { isModalOpen, updateEvent, removeEvent, selectedEvent, toggleModal, selectEvent } =
-    useEventStore();
-  
-  const { createEvent, editEvent, deleteEvent } = useEventActions();
+  const [events, setEvents] = useState<Event[]>(mockEvents);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-    const handleSave = async (formData: any) => {
-      if (selectedEvent) {
-        await editEvent(formData);
-      } else {
-        await createEvent(formData);
-      }
+  const hasEvents = events.length > 0;
+
+  const handleCreate = (newEvent: Omit<Event, "id" | "status">) => {
+    const id = uuidv4();
+
+    // Add id + status
+    const eventWithId = {
+      ...newEvent,
+      id, // generate unique id
+      status: "published" as const,
     };
+
+    setEvents((prev) => [...prev, eventWithId]);
+    setIsModalOpen(false); // close modal
+  };
+  const handleEdit = (event: Event) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    setEvents((prev) => prev.filter((event) => event.id !== id));
+  };
+
+  const handleSave = (eventData: EventFormData) => {
+    if (selectedEvent) {
+      // Updating existing event
+      setEvents((prev) =>
+        prev.map((e) =>
+          e.id === selectedEvent.id
+            ? ({ ...eventData, id: e.id, status: e.status } as Event)
+            : e
+        )
+      );
+      setSelectedEvent(null);
+    } else {
+      // Creating new event
+      handleCreate(eventData);
+    }
+
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="lg:p-6 px-4">
       {/* Page Header */}
@@ -32,8 +63,8 @@ const EventsPage = () => {
         <h1 className="text-2xl font-bold">Your Events</h1>
         <Button
           onClick={() => {
-            selectEvent(null);
-            toggleModal(true);
+            setSelectedEvent(null);
+            setIsModalOpen(true);
           }}
           className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
         >
@@ -45,33 +76,37 @@ const EventsPage = () => {
       </div>
 
       {/* Empty State */}
-      {events.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50 rounded-lg">
-          <p className="text-gray-500 mb-4">No events yet.</p>
+      {!hasEvents && (
+        <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50 rounded-lg ">
+          <p className="text-gray-500 mb-4">
+            You have not yet created any events.
+          </p>
           <Button
             onClick={() => {
-              selectEvent(null);
-              toggleModal(true);
+              setSelectedEvent(null);
+              setIsModalOpen(true);
             }}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
+            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
           >
-            Create Event
+            Create Your First Event
           </Button>
         </div>
-      ) : (
-        <ul className="divide-y divide-gray-200">
-          {events.map((event) => (
-            <EventItem
-              key={event.id}
-              event={event}
-              onEdit={(e) => {
-                selectEvent(e);
-                toggleModal(true);
-              }}
-              onDelete={deleteEvent}
-            />
-          ))}
-        </ul>
+      )}
+
+      {/* Events List */}
+      {hasEvents && (
+        <div className=" ">
+          <ul className="divide-y divide-gray-200">
+            {events.map((event) => (
+              <EventItem
+                key={event.id}
+                event={event}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
+            ))}
+          </ul>
+        </div>
       )}
 
       {isModalOpen && (
@@ -80,7 +115,7 @@ const EventsPage = () => {
             <EventForm
               initialData={selectedEvent || undefined}
               onCreate={handleSave}
-              onCancel={() => toggleModal(false)}
+              onCancel={() => setIsModalOpen(false)}
             />
           </div>
         </div>
