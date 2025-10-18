@@ -54,8 +54,9 @@ export default function EventForm({
     defaultValues: initialData || {},
   });
 
-  const onSubmit = async (data: EventFormData) => {
-    onCreate(data);
+  const onSubmit = (data: EventFormData) => {
+    console.log("Form submitted:", data);
+     onCreate(data);
   };
 
   return (
@@ -134,7 +135,6 @@ export default function EventForm({
        
       </div>
 
-      {/* Thumbnail */}
       <FormField
         label="Thumbnail URL"
         type="url"
@@ -143,7 +143,6 @@ export default function EventForm({
         error={errors.thumbnailUrl}
       />
 
-      {/* Actions */}
       <div className="flex justify-end gap-3 pt-4">
         {onCancel && (
           <Button
