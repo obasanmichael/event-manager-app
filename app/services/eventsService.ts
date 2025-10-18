@@ -1,10 +1,11 @@
 // services/EventsService.ts
 
 import { supabase } from "@/lib/supabase/client";
+import { CreateEventInput, UpdateEventInput } from "../app/events/events";
 
 export const EventsService = {
   // ✅ Create Event
-  create: async (payload: any) => {
+  create: async (payload: CreateEventInput) => {
     const { data, error } = await supabase
       .from("events")
       .insert([payload])
@@ -14,7 +15,7 @@ export const EventsService = {
   },
 
   // ✅ Update Event
-  update: async (id: string, payload: any) => {
+  update: async (id: string, payload: UpdateEventInput) => {
     const { data, error } = await supabase
       .from("events")
       .update(payload)

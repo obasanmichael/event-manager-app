@@ -13,6 +13,8 @@ export interface Event {
   thumbnailUrl: string;
   status: "draft" | "published";
 }
+export type CreateEventInput = Omit<Event, "id" >;
+export type UpdateEventInput = Partial<CreateEventInput>;
 
 export const eventsCreated: Event[] = [
   {
