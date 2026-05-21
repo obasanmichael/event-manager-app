@@ -1,9 +1,10 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, MapPin, Eye, Pencil, Trash2 } from "lucide-react";
-import * as React from "react";
 import { Button } from "@/app/components/ui/Button";
+import { cn } from "@/lib/utils";
 import { Event } from "./events";
 
 interface EventItemProps {
@@ -12,22 +13,18 @@ interface EventItemProps {
   onEdit: (event: Event) => void;
 }
 
-/** Format a proper date-time */
 export function formatDate(dateStr: string) {
-  const date = new Date(dateStr);
   return new Intl.DateTimeFormat(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
-  }).format(date);
+  }).format(new Date(dateStr));
 }
 
 export function formatTime(timeStr: string) {
-  // Use today's date just to attach the time
   const [hours, minutes] = timeStr.split(":").map(Number);
   const tempDate = new Date();
   tempDate.setHours(hours, minutes);
-
   return new Intl.DateTimeFormat(undefined, {
     hour: "2-digit",
     minute: "2-digit",
@@ -39,7 +36,7 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
     id,
     title,
     date,
-    time, // now a Date or ISO string
+    time,
     location,
     category,
     price,
@@ -48,67 +45,60 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
   } = event;
 
   return (
-    <div
-      className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-gray-200 bg-white p-4 hover:border-indigo-200 hover:shadow-md transition"
-      role="row"
+    <li
+      className={cn(
+        "group flex flex-col gap-4 rounded-2xl border border-border bg-card p-4 transition",
+        "hover:border-primary/30 hover:shadow-brand sm:flex-row sm:items-center sm:justify-between"
+      )}
     >
-      {/* Left: thumb + details */}
-      <div className="flex min-w-0 items-center gap-3 sm:gap-4" role="gridcell">
-        {/* Thumbnail */}
-        <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
+      <div className="flex min-w-0 items-center gap-4">
+        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-muted">
           {thumbnailUrl ? (
             <Image
               src={thumbnailUrl}
               alt={title}
               fill
-              sizes="48px"
+              sizes="56px"
               className="object-cover"
-              priority={false}
             />
           ) : (
-            <div className="h-full w-full grid place-items-center text-gray-400 text-xs">
-              IMG
+            <div className="grid h-full w-full place-items-center text-xs text-muted-foreground">
+              EVT
             </div>
           )}
         </div>
 
-        {/* Textual info */}
         <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="truncate text-sm font-semibold text-gray-900 max-w-[160px] sm:max-w-[200px]">
-              {title}
-            </h3>
-
-            {/* Status badge */}
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="truncate font-semibold text-foreground">{title}</h3>
             <span
-              className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
+              className={cn(
+                "inline-flex rounded-full px-2 py-0.5 text-[10px] font-medium",
                 status === "published"
-                  ? "bg-indigo-50 text-indigo-700"
-                  : "bg-yellow-50 text-yellow-700"
-              }`}
+                  ? "bg-primary/10 text-primary"
+                  : "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+              )}
             >
               {status === "published" ? "Live" : "Draft"}
             </span>
-
-            {/* Category badge */}
             {category && (
-              <span className="hidden sm:inline-flex items-center rounded-full bg-blue-50 text-blue-700 px-2 py-0.5 text-[10px] font-medium">
+              <span className="hidden rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-flex">
                 {category}
               </span>
             )}
           </div>
 
-          <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-600">
-            <span className="inline-flex items-center">
-              <Calendar className="mr-1 h-3.5 w-3.5 text-indigo-600" />
-              {formatDate(date)} {formatTime(time)}
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5 text-primary" />
+              {formatDate(date)} · {formatTime(time)}
             </span>
-            <span className="inline-flex items-center min-w-0">
-              <MapPin className="mr-1 h-3.5 w-3.5 text-indigo-600 flex-shrink-0" />
+            <span className="inline-flex min-w-0 items-center gap-1">
+              <MapPin className="h-3.5 w-3.5 shrink-0 text-primary" />
               <span className="truncate">{location}</span>
             </span>
             {price !== undefined && (
-              <span className="inline-flex items-center rounded-md bg-gray-100 px-2 py-0.5 text-[11px] text-gray-800">
+              <span className="rounded-md bg-muted px-2 py-0.5 font-medium text-foreground">
                 ${price}
               </span>
             )}
@@ -116,34 +106,26 @@ const EventItem = ({ event, onDelete, onEdit }: EventItemProps) => {
         </div>
       </div>
 
-      {/* Right: actions */}
-      <div
-        className="flex items-center gap-2 sm:gap-3 justify-end"
-        role="gridcell"
-      >
+      <div className="flex items-center justify-end gap-2">
         <Link
           href={`/app/events/${id}`}
-          className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-primary/30 hover:text-primary"
         >
           <Eye className="h-4 w-4" />
         </Link>
-
-        <Button
-          onClick={() => onEdit(event)}
-          className="inline-flex items-center rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 hover:border-indigo-200 hover:text-indigo-700 transition"
-        >
+        <Button variant="outline" size="icon" onClick={() => onEdit(event)}>
           <Pencil className="h-4 w-4" />
         </Button>
-
-        <button
-          type="button"
-          onClick={() => onDelete?.(id)}
-          className="inline-flex items-center rounded-md border border-red-200 bg-white px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition"
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => onDelete(id)}
+          className="text-destructive hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
         >
           <Trash2 className="h-4 w-4" />
-        </button>
+        </Button>
       </div>
-    </div>
+    </li>
   );
 };
 

@@ -5,7 +5,8 @@ import { eventsCreated as mockEvents, Event } from "./events";
 import { Button } from "@/app/components/ui/Button";
 import EventItem from "./eventItem";
 import EventForm, { EventFormData } from "./EventForm";
-import { Plus } from "lucide-react";
+import { DashboardHeader } from "@/app/components/layouts/DashboardHeader";
+import { Plus, CalendarPlus } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 
 const EventsPage = () => {
@@ -16,18 +17,15 @@ const EventsPage = () => {
   const hasEvents = events.length > 0;
 
   const handleCreate = (newEvent: Omit<Event, "id" | "status">) => {
-    const id = uuidv4();
-
-    // Add id + status
     const eventWithId = {
       ...newEvent,
-      id, // generate unique id
+      id: uuidv4(),
       status: "published" as const,
     };
-
     setEvents((prev) => [...prev, eventWithId]);
-    setIsModalOpen(false); // close modal
+    setIsModalOpen(false);
   };
+
   const handleEdit = (event: Event) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
@@ -39,7 +37,6 @@ const EventsPage = () => {
 
   const handleSave = (eventData: EventFormData) => {
     if (selectedEvent) {
-      // Updating existing event
       setEvents((prev) =>
         prev.map((e) =>
           e.id === selectedEvent.id
@@ -49,54 +46,48 @@ const EventsPage = () => {
       );
       setSelectedEvent(null);
     } else {
-      // Creating new event
       handleCreate(eventData);
     }
-
     setIsModalOpen(false);
   };
 
-  return (
-    <div className="lg:p-6 px-4">
-      {/* Page Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Your Events</h1>
-        <Button
-          onClick={() => {
-            setSelectedEvent(null);
-            setIsModalOpen(true);
-          }}
-          className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
-        >
-          {/* Icon always visible */}
-          <Plus className="h-4 w-4" />
-          {/* Text only on medium+ screens */}
-          <span className="hidden sm:inline">Create Event</span>
-        </Button>
-      </div>
+  const openCreate = () => {
+    setSelectedEvent(null);
+    setIsModalOpen(true);
+  };
 
-      {/* Empty State */}
-      {!hasEvents && (
-        <div className="flex flex-col items-center justify-center py-20 text-center bg-gray-50 rounded-lg ">
-          <p className="text-gray-500 mb-4">
-            You have not yet created any events.
-          </p>
-          <Button
-            onClick={() => {
-              setSelectedEvent(null);
-              setIsModalOpen(true);
-            }}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md hover:opacity-90 transition"
-          >
-            Create Your First Event
+  return (
+    <>
+      <DashboardHeader
+        title="My Events"
+        description="Create and manage your events"
+      />
+      <div className="flex-1 bg-background p-4 pt-20 lg:p-8 lg:pt-8">
+        <div className="mb-6 flex items-center justify-end">
+          <Button onClick={openCreate}>
+            <Plus className="h-4 w-4" />
+            <span className="hidden sm:inline">Create event</span>
           </Button>
         </div>
-      )}
 
-      {/* Events List */}
-      {hasEvents && (
-        <div className=" ">
-          <ul className="divide-y divide-gray-200">
+        {!hasEvents && (
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-muted/30 py-20 text-center">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <CalendarPlus className="h-7 w-7" />
+            </div>
+            <p className="mb-1 font-medium text-foreground">
+              No events yet
+            </p>
+            <p className="mb-6 max-w-sm text-sm text-muted-foreground">
+              Create your first event to start selling tickets and managing
+              attendees.
+            </p>
+            <Button onClick={openCreate}>Create your first event</Button>
+          </div>
+        )}
+
+        {hasEvents && (
+          <ul className="space-y-3">
             {events.map((event) => (
               <EventItem
                 key={event.id}
@@ -106,21 +97,21 @@ const EventsPage = () => {
               />
             ))}
           </ul>
-        </div>
-      )}
+        )}
 
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
-            <EventForm
-              initialData={selectedEvent || undefined}
-              onCreate={handleSave}
-              onCancel={() => setIsModalOpen(false)}
-            />
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20 p-4 backdrop-blur-sm">
+            <div className="relative w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-xl">
+              <EventForm
+                initialData={selectedEvent || undefined}
+                onCreate={handleSave}
+                onCancel={() => setIsModalOpen(false)}
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

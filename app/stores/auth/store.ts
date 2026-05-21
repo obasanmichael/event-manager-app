@@ -1,9 +1,9 @@
 import { getUserSession, signOut } from "@/lib/auth";
-import { User } from "@supabase/supabase-js";
+import { AppUser } from "@/lib/session";
 import { create } from "zustand";
 
 interface AuthStore {
-  user: User | null;
+  user: AppUser | null;
   loading: boolean;
   fetchUser: () => Promise<void>;
   logout: () => Promise<void>;
@@ -28,6 +28,5 @@ const useAuthStore = create<AuthStore>((set) => ({
     await signOut();
   },
 }));
-
 
 export default useAuthStore;

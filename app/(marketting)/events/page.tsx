@@ -1,71 +1,74 @@
 "use client";
+
 import { useState } from "react";
 import { Search } from "lucide-react";
-import EventCard from "../../components/marketing/EventCard";
+import EventCard from "@/app/components/marketing/EventCard";
 import { events } from "@/app/app/events/events";
+import { cn } from "@/lib/utils";
+import { Input } from "@/app/components/ui/Input";
+
+const categories = [
+  "All",
+  "Concert",
+  "Conference",
+  "Workshop",
+  "Exhibition",
+  "Sport",
+  "Networking",
+  "Food & Drink",
+  "Business",
+  "Entertainment",
+];
 
 export default function EventsPage() {
-  const [activeFilter, setActiveFilter] = useState<string>("All");
+  const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categories = [
-    "All",
-    "Concert",
-    "Conference",
-    "Workshop",
-    "Exhibition",
-    "Sport",
-    "Networking",
-    "Food & Drink",
-    "Business",
-    "Entertainment",
-  ];
-
-  const filterdEvents = events
+  const filteredEvents = events
     .filter((e) =>
       activeFilter === "All" ? true : e.category === activeFilter
     )
-    .filter((e) => e.title.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter((e) =>
+      e.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      {/* Page Header */}
-      <div className="bg-white pt-20 pb-6 shadow-sm">
-        <div className="container mx-auto px-4 md:px-6 pt-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Discover Events
+    <div className="min-h-screen">
+      <div className="border-b border-border bg-card pt-24 pb-8">
+        <div className="container mx-auto px-4 md:px-6">
+          <p className="text-sm font-medium uppercase tracking-wider text-primary">
+            Discover
+          </p>
+          <h1 className="mt-1 text-3xl font-bold text-foreground md:text-4xl">
+            Find your next experience
           </h1>
-          <p className="mt-2 text-lg text-gray-600">
-            Find and book tickets to the most exciting events happening near you
+          <p className="mt-2 max-w-xl text-muted-foreground">
+            Browse concerts, conferences, workshops, and more near you.
           </p>
 
-          {/* Search Bar */}
-          <div className="mt-6 relative">
-            <div className="flex gap-2">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <input
-                  type="text"
-                  placeholder="Search events, venues, or cities..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 outline-none transition-all"
-                />
-              </div>
-            </div>
+          <div className="relative mt-6 max-w-xl">
+            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search events, venues, or cities..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-12"
+            />
           </div>
 
-          {/* Category filtering */}
           <div className="mt-6 flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
                 key={category}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeFilter === category
-                    ? "bg-gradient-to-br from-purple-600 to-indigo-600 shadow-md text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+                type="button"
                 onClick={() => setActiveFilter(category)}
+                className={cn(
+                  "rounded-full px-4 py-2 text-sm font-medium transition",
+                  activeFilter === category
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-muted text-muted-foreground hover:bg-border hover:text-foreground"
+                )}
               >
                 {category}
               </button>
@@ -74,21 +77,21 @@ export default function EventsPage() {
         </div>
       </div>
 
-      {/* Events Grid */}
-      <div className="flex-grow py-8 md:py-12">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filterdEvents.length > 0 ? (
-              filterdEvents.map((event) => (
-                <EventCard key={event.id} {...event} />
-              ))
-            ) : (
-              <p className="col-span-full text-center text-gray-500">
-                No events match your search.
-              </p>
-            )}
+      <div className="container mx-auto px-4 py-10 md:px-6 md:py-14">
+        {filteredEvents.length > 0 ? (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredEvents.map((event) => (
+              <EventCard key={event.id} {...event} />
+            ))}
           </div>
-        </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-border bg-muted/30 py-20 text-center">
+            <p className="font-medium text-foreground">No events found</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Try adjusting your search or filters.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

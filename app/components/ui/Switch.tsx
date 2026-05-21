@@ -1,34 +1,38 @@
-import { useState } from "react";
+"use client";
+
+import { cn } from "@/lib/utils";
 
 type SwitchProps = {
   checked?: boolean;
-  onChange?: (checked: boolean) => void;
+  onCheckedChange?: (checked: boolean) => void;
   className?: string;
+  id?: string;
 };
 
 export const Switch = ({
   checked = false,
-  onChange,
-  className = "",
+  onCheckedChange,
+  className,
+  id,
 }: SwitchProps) => {
-  const [isChecked, setIsChecked] = useState(checked);
-
-  const toggle = () => {
-    setIsChecked(!isChecked);
-    onChange?.(!isChecked);
-  };
-
   return (
     <button
-      onClick={toggle}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
-        isChecked ? "bg-indigo-500" : "bg-gray-300"
-      } ${className}`}
+      type="button"
+      role="switch"
+      id={id}
+      aria-checked={checked}
+      onClick={() => onCheckedChange?.(!checked)}
+      className={cn(
+        "relative inline-flex h-6 w-11 items-center rounded-full transition-colors",
+        checked ? "bg-primary" : "bg-muted",
+        className
+      )}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
-          isChecked ? "translate-x-6" : "translate-x-1"
-        }`}
+        className={cn(
+          "inline-block h-4 w-4 transform rounded-full bg-card shadow transition-transform",
+          checked ? "translate-x-6" : "translate-x-1"
+        )}
       />
     </button>
   );

@@ -1,113 +1,90 @@
+import { Mail, Phone, MessageSquare } from "lucide-react";
+import { Button } from "@/app/components/ui/Button";
+import { Input } from "@/app/components/ui/Input";
+import { Label } from "@/app/components/ui/Label";
+import { Card, CardContent } from "@/app/components/ui/Card";
 
 export default function ContactPage() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <div className="relative h-64 md:h-80 lg:h-96 w-full">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-800 bg-opacity-70 flex flex-col items-center justify-center text-center text-white px-4">
-          <h1 className="text-3xl md:text-4xl font-bold">Contact Us</h1>
-          <p className="mt-2 text-sm md:text-base max-w-2xl">
-            Have questions or need assistance? We’re here to help you every step
-            of the way.
+      <div className="relative flex h-64 w-full items-center justify-center bg-gradient-brand md:h-80">
+        <div className="relative z-10 px-4 text-center text-white">
+          <h1 className="text-3xl font-bold md:text-4xl">Contact us</h1>
+          <p className="mx-auto mt-2 max-w-xl text-white/80">
+            Questions about features, pricing, or partnerships? We&apos;re here
+            to help.
           </p>
         </div>
       </div>
 
-      {/* Contact Section */}
-      <section className="bg-gray-50 py-16 px-4 md:px-8 lg:px-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Left Info */}
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 px-4 md:px-6 lg:grid-cols-2">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">
-              Get In Touch With Us
+            <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+              Get in touch
             </h2>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              Whether you’re curious about features, have a question about
-              pricing, or simply want to connect — we’d love to hear from you.
-              Reach out and our team will get back to you as soon as possible.
+            <p className="mt-4 leading-relaxed text-muted-foreground">
+              Our team typically responds within one business day. Reach out for
+              demos, support, or enterprise inquiries.
             </p>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 text-gray-800">
-                <span className="bg-gradient-to-br from-blue-600 to-indigo-600 text-white p-3 rounded-xl shadow-md">
-                  📞
+            <div className="mt-8 space-y-4">
+              <div className="flex items-center gap-4">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Phone className="h-5 w-5" />
                 </span>
-                <span className="text-lg font-medium">0800 555 44 33</span>
+                <span className="font-medium text-foreground">
+                  0800 555 44 33
+                </span>
               </div>
-              <div className="flex items-center gap-3 text-gray-800">
-                <span className="bg-gradient-to-br from-purple-600 to-indigo-600 text-white p-3 rounded-xl shadow-md">
-                  ✉️
+              <div className="flex items-center gap-4">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Mail className="h-5 w-5" />
                 </span>
-                <span className="text-lg font-medium">support@example.com</span>
+                <span className="font-medium text-foreground">
+                  support@meevent.com
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Form */}
-          <div className="bg-white shadow-xl rounded-2xl p-8 border border-gray-100">
-            <form className="space-y-5">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your full name"
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition"
-                />
+          <Card className="shadow-brand">
+            <CardContent className="space-y-5 p-8">
+              <div className="mb-2 flex items-center gap-2 text-primary">
+                <MessageSquare className="h-5 w-5" />
+                <span className="font-medium">Send a message</span>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your phone number"
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter subject"
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Message
-                </label>
-                <textarea
-                  rows={4}
-                  placeholder="How can we help you? Feel free to get in touch!"
-                  className="w-full rounded-xl border border-gray-200 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-700 text-white py-3 rounded-xl font-semibold shadow-md hover:opacity-90 transition"
-              >
-                Send Message
-              </button>
-            </form>
-          </div>
+              <form className="space-y-5">
+                <div>
+                  <Label htmlFor="name">Full name</Label>
+                  <Input id="name" placeholder="Your name" />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input id="phone" placeholder="+1 234 567 8900" />
+                </div>
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input id="email" type="email" placeholder="you@example.com" />
+                </div>
+                <div>
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input id="subject" placeholder="How can we help?" />
+                </div>
+                <div>
+                  <Label htmlFor="message">Message</Label>
+                  <textarea
+                    id="message"
+                    rows={4}
+                    placeholder="Tell us more..."
+                    className="w-full rounded-xl border border-input bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+                  />
+                </div>
+                <Button type="submit" className="w-full">
+                  Send message
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>

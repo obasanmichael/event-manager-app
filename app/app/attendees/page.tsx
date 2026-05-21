@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Attendee } from "./attendees";
 import AttendeeList from "./AttendeeList";
 import { Button } from "@/app/components/ui/Button";
+import { DashboardHeader } from "@/app/components/layouts/DashboardHeader";
+import { Download } from "lucide-react";
 
 const AttendeesPage = () => {
   const [attendees] = useState<Attendee[]>([
@@ -24,11 +26,9 @@ const AttendeesPage = () => {
   const exportToCSV = () => {
     const headers = ["ID", "Name", "Email", "Phone"];
     const rows = attendees.map((a) => [a.id, a.name, a.email, a.phone]);
-
     const csvContent =
       "data:text/csv;charset=utf-8," +
       [headers, ...rows].map((e) => e.join(",")).join("\n");
-
     const link = document.createElement("a");
     link.setAttribute("href", encodeURI(csvContent));
     link.setAttribute("download", "attendees.csv");
@@ -38,19 +38,21 @@ const AttendeesPage = () => {
   };
 
   return (
-    <div className="px-4 lg:p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Attendees</h1>
-        <Button
-          onClick={exportToCSV}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-        >
-          Export CSV
-        </Button>
+    <>
+      <DashboardHeader
+        title="Attendees"
+        description="View and export your event participants"
+      />
+      <div className="flex-1 space-y-6 bg-background p-4 pt-20 lg:p-8 lg:pt-8">
+        <div className="flex justify-end">
+          <Button onClick={exportToCSV} variant="outline">
+            <Download className="h-4 w-4" />
+            Export CSV
+          </Button>
+        </div>
+        <AttendeeList attendees={attendees} />
       </div>
-
-      <AttendeeList attendees={attendees} />
-    </div>
+    </>
   );
 };
 

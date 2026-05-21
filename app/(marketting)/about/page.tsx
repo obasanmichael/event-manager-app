@@ -1,6 +1,6 @@
-// app/about/page.tsx
 import { Metadata } from "next";
 import Image from "next/image";
+import { Target, Eye, Users, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us | Me-event",
@@ -8,56 +8,75 @@ export const metadata: Metadata = {
     "Learn more about Me-event and our mission to make event planning seamless.",
 };
 
+const values = [
+  {
+    icon: Target,
+    title: "Our mission",
+    description:
+      "Empower organizers and attendees by simplifying every step of event management — tickets, schedules, venues, and engagement in one platform.",
+  },
+  {
+    icon: Eye,
+    title: "Our vision",
+    description:
+      "Become the trusted platform for discovering and managing events, making memorable experiences accessible to everyone.",
+  },
+  {
+    icon: Users,
+    title: "Community first",
+    description:
+      "We build for organizers who bring people together — from intimate workshops to stadium-scale concerts.",
+  },
+  {
+    icon: Zap,
+    title: "Built for speed",
+    description:
+      "Launch events in minutes, not days. Smart tools that scale from your first meetup to your biggest festival.",
+  },
+];
+
 export default function AboutPage() {
   return (
-    <section className="relative bg-gray-50 py-20">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
-        {/* Heading */}
-        <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">
-          About{" "}
-          <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Me-event
-          </span>
-        </h1>
-        <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-          Me-event is a modern event management platform designed to make
-          planning, organizing, and attending events seamless. From concerts and
-          conferences to meetups and workshops, we provide a smart and
-          user-friendly way to connect people with experiences they love.
-        </p>
+    <section className="py-20 md:py-28">
+      <div className="container mx-auto max-w-5xl px-4 md:px-6">
+        <div className="text-center">
+          <p className="mb-2 text-sm font-medium uppercase tracking-wider text-primary">
+            About us
+          </p>
+          <h1 className="text-4xl font-bold text-foreground sm:text-5xl">
+            Events deserve a{" "}
+            <span className="text-gradient-brand">better platform</span>
+          </h1>
+          <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
+            Me-event is a modern event management platform for concerts,
+            conferences, workshops, and everything in between — designed for
+            organizers who care about craft.
+          </p>
+        </div>
 
-        {/* Image */}
-        <div className="mt-10 relative w-full h-80 md:h-[500px]">
+        <div className="relative mt-12 h-72 overflow-hidden rounded-2xl shadow-brand md:h-[420px]">
           <Image
             src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=1200"
             alt="Event gathering"
-            className="w-full rounded-2xl shadow-lg"
             fill
+            className="object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
         </div>
 
-        {/* Mission & Vision */}
-        <div className="mt-12 grid gap-8 md:grid-cols-2 text-left">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition">
-            <h2 className="text-xl font-semibold text-gray-900">
-              🎯 Our Mission
-            </h2>
-            <p className="mt-3 text-gray-600">
-              To empower organizers and attendees by simplifying event
-              management. We bring all aspects of event planning—tickets,
-              schedules, locations, and engagement—into one powerful platform.
-            </p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition">
-            <h2 className="text-xl font-semibold text-gray-900">
-              🌟 Our Vision
-            </h2>
-            <p className="mt-3 text-gray-600">
-              To be the go-to platform for discovering and managing events,
-              making experiences more accessible, enjoyable, and memorable for
-              everyone.
-            </p>
-          </div>
+        <div className="mt-16 grid gap-6 sm:grid-cols-2">
+          {values.map(({ icon: Icon, title, description }) => (
+            <div
+              key={title}
+              className="rounded-2xl border border-border bg-card p-8 transition hover:border-primary/30 hover:shadow-brand"
+            >
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <Icon className="h-5 w-5" />
+              </div>
+              <h2 className="text-xl font-semibold text-foreground">{title}</h2>
+              <p className="mt-3 text-muted-foreground">{description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

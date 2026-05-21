@@ -1,35 +1,28 @@
-// AttendeeList.tsx
 import AttendeeItem from "./AttendeeItem";
 import { Attendee } from "./attendees";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/Card";
 
 type AttendeeListProps = {
   attendees: Attendee[];
 };
 
-const AttendeeList = ({ attendees }: AttendeeListProps) => {
-  return (
-    <section className="bg-white rounded-2xl shadow-sm border border-gray-200">
-      {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b">
-        <div>
-          <h2 className="text-xl font-bold text-gray-900">Attendees</h2>
-          <p className="text-sm text-gray-500">
-            {attendees.length} {attendees.length === 1 ? "person" : "people"}{" "}
-            registered
-          </p>
-        </div>
-
-        
-      </div>
-
-      {/* List */}
-      <ol className="divide-y divide-gray-100 px-4 py-3 space-y-2">
+const AttendeeList = ({ attendees }: AttendeeListProps) => (
+  <Card>
+    <CardHeader>
+      <CardTitle>Registered attendees</CardTitle>
+      <p className="text-sm text-muted-foreground">
+        {attendees.length} {attendees.length === 1 ? "person" : "people"}{" "}
+        registered
+      </p>
+    </CardHeader>
+    <CardContent className="space-y-2 p-4 pt-0">
+      <ol className="space-y-2">
         {attendees.map((attendee, index) => (
           <AttendeeItem key={attendee.id} index={index} attendee={attendee} />
         ))}
       </ol>
-    </section>
-  );
-};
+    </CardContent>
+  </Card>
+);
 
 export default AttendeeList;

@@ -15,24 +15,25 @@ export default function StatsGrid({
   activeAttendees,
 }: StatsGridProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
       <StatCard
         icon={<CalendarDays className="h-5 w-5" />}
         label="Total Events"
         value={totalEvents}
-        hint="All-time events you’ve created"
+        hint="All events you've created"
       />
       <StatCard
         icon={<TicketCheck className="h-5 w-5" />}
         label="Upcoming Events"
         value={upcomingEvents}
-        hint="Happening soon based on date"
+        hint="Scheduled from today onward"
+        trend={upcomingEvents > 0 ? "Active" : undefined}
       />
       <StatCard
         icon={<Users className="h-5 w-5" />}
         label="Active Attendees"
         value={activeAttendees}
-        hint="Paid/confirmed participants"
+        hint="Confirmed participants"
       />
     </div>
   );

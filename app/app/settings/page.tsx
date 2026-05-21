@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Save } from "lucide-react";
+import { ThemeToggle } from "@/app/components/theme/ThemeToggle";
 import { Switch } from "@/app/components/ui/Switch";
 import { Avatar, AvatarImage } from "@/app/components/ui/Avatar";
 import { Label } from "@/app/components/ui/Label";
@@ -13,130 +14,127 @@ import {
   CardTitle,
 } from "@/app/components/ui/Card";
 import { Button } from "@/app/components/ui/Button";
+import { DashboardHeader } from "@/app/components/layouts/DashboardHeader";
 import useProfileStore from "@/app/stores/profile/store";
 
 export default function SettingsPage() {
   const { profile } = useProfileStore();
-  const [notifications] = useState(true);
+  const [notifications, setNotifications] = useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleDeleteAccount = () => {
-    console.log("Account deleted!");
     setDeleteModalOpen(false);
   };
 
   return (
-    <div className="max-h-screen bg-gray-50 lg:p-8 px-4">
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Profile Section */}
-        <Card className="shadow-md rounded-2xl overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-            <CardTitle className="text-lg">Profile</CardTitle>
+    <>
+      <DashboardHeader
+        title="Settings"
+        description="Manage your profile and preferences"
+      />
+      <div className="mx-auto max-w-4xl flex-1 space-y-8 bg-background p-4 pt-20 lg:p-8 lg:pt-8">
+        <Card className="shadow-sm">
+          <CardHeader className="border-b border-border bg-muted/40">
+            <CardTitle>Profile</CardTitle>
           </CardHeader>
-          <CardContent className="p-6 space-y-6">
+          <CardContent className="space-y-6 p-6">
             <div className="flex items-center gap-6">
               <Avatar className="h-20 w-20">
                 <AvatarImage
-                  src="https://images.unsplash.com/photo-1756314355668-7d3056db8600?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://images.unsplash.com/photo-1756314355668-7d3056db8600?q=80&w=2670&auto=format&fit=crop"
                   alt="Profile"
                 />
               </Avatar>
-              <Button variant="outline">Change Photo</Button>
+              <Button variant="outline">Change photo</Button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex flex-row gap-3">
-                <div>
-                  <Label htmlFor="name">First Name</Label>
-                  <Input id="name" placeholder={profile?.first_name} />
-                </div>
-                <div>
-                  <Label htmlFor="name">Last Name</Label>
-                  <Input id="name" placeholder={profile?.last_name} />
-                </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="firstName">First name</Label>
+                <Input id="firstName" defaultValue={profile?.first_name} />
               </div>
               <div>
+                <Label htmlFor="lastName">Last name</Label>
+                <Input id="lastName" defaultValue={profile?.last_name} />
+              </div>
+              <div className="sm:col-span-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder={profile?.email} />
+                <Input id="email" type="email" defaultValue={profile?.email} />
               </div>
               <div>
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" type="tel" placeholder="+123 456 7890" />
+                <Label htmlFor="phone">Phone</Label>
+                <Input id="phone" type="tel" placeholder="+1 234 567 8900" />
               </div>
               <div>
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="********" />
+                <Input id="password" type="password" placeholder="••••••••" />
               </div>
             </div>
 
             <div className="flex justify-end">
-              <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white hover:opacity-90 transition">
-                <Save className="mr-2 h-4 w-4" /> Save Changes
+              <Button>
+                <Save className="h-4 w-4" />
+                Save changes
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* Account Preferences */}
-        <Card className="shadow-md rounded-2xl overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-            <CardTitle className="text-lg">Account Preferences</CardTitle>
+        <Card className="shadow-sm">
+          <CardHeader className="border-b border-border bg-muted/40">
+            <CardTitle>Preferences</CardTitle>
           </CardHeader>
-          <CardContent className="p-6 space-y-6">
-            {/* Notifications */}
-            <div className="flex items-center justify-between">
+          <CardContent className="space-y-6 p-6">
+            <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="font-medium">Email Notifications</p>
-                <p className="text-sm text-gray-500">
-                  Get notified about event updates and attendee activity.
+                <p className="font-medium text-foreground">
+                  Email notifications
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Updates on events and attendee activity.
                 </p>
               </div>
               <Switch
                 checked={notifications}
-                // onCheckedChange={setNotifications}
+                onCheckedChange={setNotifications}
               />
             </div>
 
-            {/* Dark Mode */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4 border-t border-border pt-6">
               <div>
-                <p className="font-medium">Dark Mode</p>
-                <p className="text-sm text-gray-500">
-                  Switch to a darker theme for night use.
+                <p className="font-medium text-foreground">Appearance</p>
+                <p className="text-sm text-muted-foreground">
+                  Switch between light and dark themes.
                 </p>
               </div>
-              <Switch />
+              <ThemeToggle variant="switch" />
             </div>
 
-            {/* Delete Account */}
-            <div className="pt-4 border-t">
-              <p className="font-medium text-red-600">Danger Zone</p>
-              <p className="text-sm text-gray-500 mb-3">
-                Once you delete your account, all your data will be lost
-                permanently.
+            <div className="border-t border-border pt-6">
+              <p className="font-medium text-destructive">Danger zone</p>
+              <p className="mb-3 text-sm text-muted-foreground">
+                Permanently delete your account and all associated data.
               </p>
               <Button
                 variant="destructive"
                 onClick={() => setDeleteModalOpen(true)}
               >
-                Delete Account
+                Delete account
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        {/* Custom Modal */}
         {deleteModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
-            <div className="bg-white rounded-2xl shadow-lg max-w-md w-full p-6">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Delete Account
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20 p-4 backdrop-blur-sm">
+            <Card className="w-full max-w-md p-6 shadow-xl">
+              <h2 className="text-lg font-semibold text-foreground">
+                Delete account
               </h2>
-              <p className="text-sm text-gray-600 mt-2">
-                Are you absolutely sure? This action cannot be undone and will
-                permanently delete your account and all your data.
+              <p className="mt-2 text-sm text-muted-foreground">
+                This action cannot be undone. All your events and data will be
+                permanently removed.
               </p>
-
               <div className="mt-6 flex justify-end gap-3">
                 <Button
                   variant="outline"
@@ -145,13 +143,13 @@ export default function SettingsPage() {
                   Cancel
                 </Button>
                 <Button variant="destructive" onClick={handleDeleteAccount}>
-                  Yes, Delete
+                  Yes, delete
                 </Button>
               </div>
-            </div>
+            </Card>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

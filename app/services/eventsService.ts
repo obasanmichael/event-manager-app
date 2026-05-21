@@ -1,66 +1,66 @@
-// services/EventsService.ts
+import {
+  CreateEventInput,
+  Event,
+  UpdateEventInput,
+} from "../app/events/events";
+import { v4 as uuidv4 } from "uuid";
 
-import { supabase } from "@/lib/supabase/client";
-import { CreateEventInput, UpdateEventInput } from "../app/events/events";
+const EVENTS_STORAGE_KEY = "app-events";
+
+function getStoredEvents(): Event[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(EVENTS_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Event[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveEvents(events: Event[]): void {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events));
+}
 
 export const EventsService = {
-  // ✅ Create Event
   create: async (payload: CreateEventInput) => {
-    const { data, error } = await supabase
-      .from("events")
-      .insert([payload])
-      .select();
-
-    return { data, error };
+    const event: Event = { ...payload, id: uuidv4() };
+    const events = getStoredEvents();
+    events.unshift(event);
+    saveEvents(events);
+    return { data: [event], error: null };
   },
 
-  // ✅ Update Event
   update: async (id: string, payload: UpdateEventInput) => {
-    const { data, error } = await supabase
-      .from("events")
-      .update(payload)
-      .eq("id", id)
-      .select();
-
-    return { data, error };
+    const events = getStoredEvents();
+    const index = events.findIndex((e) => e.id === id);
+    if (index === -1) {
+      return { data: null, error: new Error("Event not found") };
+    }
+    const updated = { ...events[index], ...payload };
+    events[index] = updated;
+    saveEvents(events);
+    return { data: [updated], error: null };
   },
 
-  // ✅ Delete Event
   delete: async (id: string) => {
-    const { error } = await supabase.from("events").delete().eq("id", id);
-    return { error };
+    const events = getStoredEvents().filter((e) => e.id !== id);
+    saveEvents(events);
+    return { error: null };
   },
 
-  // ✅ Get All Published Events (for homepage, user browsing, etc.)
   getAllPublished: async () => {
-    const { data, error } = await supabase
-      .from("events")
-      .select("*")
-      .eq("published", true)
-      .order("created_at", { ascending: false });
-
-    return { data, error };
+    const data = getStoredEvents().filter((e) => e.status === "published");
+    return { data, error: null };
   },
 
-  // ✅ Get Events Created by Current User
-  getUserEvents: async (userId: string) => {
-    const { data, error } = await supabase
-      .from("events")
-      .select("*")
-      .eq("owner_id", userId)
-      .order("created_at", { ascending: false });
-
-    return { data, error };
+  getUserEvents: async (_userId: string) => {
+    const data = getStoredEvents();
+    return { data, error: null };
   },
 
-  // ✅ Get Event by ID
   getById: async (id: string) => {
-    const { data, error } = await supabase
-      .from("events")
-      .select("*")
-      .eq("id", id)
-      .single();
-
-    return { data, error };
+    const data = getStoredEvents().find((e) => e.id === id) ?? null;
+    return { data, error: data ? null : new Error("Event not found") };
   },
 };

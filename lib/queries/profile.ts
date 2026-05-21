@@ -1,13 +1,11 @@
-import { supabase } from "../supabase/client";
-
+import {
+  getProfileById,
+  getSessionFromCookie,
+} from "../session";
 
 export async function getProfile() {
-    const { data: { user } } = await supabase.auth.getUser();
+  const session = getSessionFromCookie();
+  if (!session) return null;
 
-    if (!user) return null;
-
-    const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-
-    if (error) throw error;
-    return profile;
+  return getProfileById(session.id);
 }

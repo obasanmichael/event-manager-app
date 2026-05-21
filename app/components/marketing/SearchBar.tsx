@@ -1,34 +1,29 @@
-"use client"
-import React from "react";
-import { Search, Send } from "lucide-react";
+"use client";
+
+import { Search, ArrowRight } from "lucide-react";
+import { Button } from "@/app/components/ui/Button";
+
 export function SearchBar() {
- 
   return (
-    <div className="w-full bg-white py-8 lg:py-16">
-      <div className="container mx-auto px-4 lg:px-6 -mt-16 lg:-mt-24 relative z-20">
-        <div className="bg-white/70 backdrop-blur-xl rounded-full shadow-lg p-2 lg:p-3">
-          <div className="flex items-center">
-            {/* Input */}
-            <div className="relative flex-grow">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+    <section className="relative z-20 -mt-12 w-full pb-4 lg:-mt-16">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="glass rounded-2xl p-2 shadow-brand lg:p-3">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search for events, concerts, or workshops..."
-                className="w-full pl-12 pr-4 py-3 rounded-full bg-transparent border-none focus:ring-0 text-gray-700 placeholder-gray-400 outline-none"
+                placeholder="Search concerts, conferences, workshops..."
+                className="w-full rounded-xl border-0 bg-transparent py-3.5 pl-12 pr-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0"
               />
             </div>
-
-            {/* Button */}
-            <button
-              className="ml-2 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors shadow-md hover:shadow-lg 
-          px-4 py-3 md:px-6 md:py-3"
-            >
-              <Send className="h-5 w-5 md:mr-2" />
-              <span className="hidden md:inline">Search</span>
-            </button>
+            <Button className="shrink-0 rounded-xl sm:px-8">
+              <span>Search</span>
+              <ArrowRight className="h-4 w-4 sm:ml-1" />
+            </Button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

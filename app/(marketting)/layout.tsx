@@ -1,33 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
-import Navbar from "../components/marketing/Navbar";
-import { Footer } from "../components/marketing/Footer";
-import { ToasterProvider } from "../providers/ToastProvider";
-import AuthListener from "../components/AuthListener";
+import { MarketingShell } from "@/app/components/layouts/MarketingShell";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Me-event - Discover & Host Events",
-  description:
-    "A modern platform to discover, host, and manage events seamlessly.",
-};
-
-export default function RootLayout({
+export default function MarketingLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
-        <AuthListener />
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <ToasterProvider />
-        <Footer />
-      </body>
-    </html>
-  );
+  return <MarketingShell>{children}</MarketingShell>;
 }

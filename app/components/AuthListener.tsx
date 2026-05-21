@@ -1,33 +1,28 @@
 "use client";
 import { useEffect } from "react";
-import useProfileStore from "../stores/profile/store"
-import { supabase } from "@/lib/supabase/client";
-
+import { AUTH_CHANGE_EVENT } from "@/lib/session";
+import useProfileStore from "../stores/profile/store";
 
 const AuthListener = () => {
-    const fetchProfile = useProfileStore(s => s.fetchProfile);
-    const clearProfile = useProfileStore(s => s.clearProfile);
+  const fetchProfile = useProfileStore((s) => s.fetchProfile);
+  const clearProfile = useProfileStore((s) => s.clearProfile);
 
-    useEffect(() => {
+  useEffect(() => {
+    fetchProfile();
+
+    const handleAuthChange = () => {
+      if (document.cookie.includes("app-session=")) {
         fetchProfile();
+      } else {
+        clearProfile();
+      }
+    };
 
-        const { data: subscription } = supabase.auth.onAuthStateChange(
-            async (_event, session) => {
-                if (session?.user) {
-                    await fetchProfile();
-                }
-                else {
-                    clearProfile();
-                }
-            }
-        );
+    window.addEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+    return () => window.removeEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+  }, [fetchProfile, clearProfile]);
 
-        return () => {
-            subscription.subscription.unsubscribe();
-        };
-    } , [fetchProfile, clearProfile])
-
-    return null;
-}
+  return null;
+};
 
 export default AuthListener;

@@ -1,33 +1,46 @@
 import Image from "next/image";
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 type AvatarProps = {
   children: ReactNode;
   className?: string;
 };
 
-export const Avatar = ({ children, className = "" }: AvatarProps) => {
-  return (
-    <div
-      className={`relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gray-200 ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
+export const Avatar = ({ children, className }: AvatarProps) => (
+  <div
+    className={cn(
+      "relative inline-flex items-center justify-center overflow-hidden rounded-full bg-muted",
+      className
+    )}
+  >
+    {children}
+  </div>
+);
 
 export const AvatarImage = ({ src, alt }: { src: string; alt?: string }) => (
   <Image
     src={src}
     alt={alt ?? "Avatar"}
     fill
-    className="object-cover rounded-full" 
-    sizes="(max-width: 768px) 40px, 80px" 
-    priority 
+    className="rounded-full object-cover"
+    sizes="(max-width: 768px) 40px, 80px"
   />
 );
 
-export const AvatarFallback = ({ children }: { children: ReactNode }) => (
-  <span className="text-sm font-medium text-gray-700">{children}</span>
-  
+export const AvatarFallback = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => (
+  <span
+    className={cn(
+      "text-sm font-semibold text-primary",
+      className
+    )}
+  >
+    {children}
+  </span>
 );

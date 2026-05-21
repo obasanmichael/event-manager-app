@@ -1,9 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
-import WelcomeCard from "./components/WelcomeCard";
-import StatsGrid from "./components/StatsGrid";
-import TrendsCard from "./components/TrendsCard";
+import WelcomeCard from "@/app/components/dashboard/WelcomeCard";
+import StatsGrid from "@/app/components/dashboard/StatsGrid";
+import TrendsCard from "@/app/components/dashboard/TrendsCard";
+import { DashboardHeader } from "@/app/components/layouts/DashboardHeader";
 import { eventsCreated as mockEvents } from "./events/events";
 import useProfileStore from "../stores/profile/store";
 
@@ -16,10 +17,9 @@ export default function DashboardPage() {
       const d = new Date(`${e.date}T${e.time || "00:00"}`);
       return d >= now;
     }).length;
-
     return { totalEvents: total, upcomingEvents: upcoming };
   }, []);
-  const activeAttendees = 248;
+
   const trendData = [
     { label: "Mar", attendees: 120 },
     { label: "Apr", attendees: 160 },
@@ -30,28 +30,30 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="px-4 lg:p-6 space-y-6">
-      {/* Grid: 12 cols on desktop → 2-column layout */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* Left column */}
-        <div className="xl:col-span-6 space-y-6">
-          <WelcomeCard
-            userName= {`${profile?.first_name} ${profile?.last_name}`}
-            email={profile?.email}
-            avatarUrl=""
-          />
-          <StatsGrid
-            totalEvents={totalEvents}
-            upcomingEvents={upcomingEvents}
-            activeAttendees={activeAttendees}
-          />
-        </div>
-
-        {/* Right column */}
-        <div className="xl:col-span-6">
-          <TrendsCard data={trendData} />
+    <>
+      <DashboardHeader
+        title="Dashboard"
+        description="Overview of your events and audience"
+      />
+      <div className="flex-1 space-y-6 bg-background p-4 pt-20 lg:p-8 lg:pt-8">
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
+          <div className="space-y-6 xl:col-span-6">
+            <WelcomeCard
+              userName={`${profile?.first_name ?? ""} ${profile?.last_name ?? ""}`.trim() || "Organizer"}
+              email={profile?.email}
+              avatarUrl=""
+            />
+            <StatsGrid
+              totalEvents={totalEvents}
+              upcomingEvents={upcomingEvents}
+              activeAttendees={248}
+            />
+          </div>
+          <div className="xl:col-span-6">
+            <TrendsCard data={trendData} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

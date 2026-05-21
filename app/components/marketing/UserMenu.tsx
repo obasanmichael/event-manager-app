@@ -1,11 +1,25 @@
-"use client"
-import useProfileStore from '@/app/stores/profile/store';
-import { signOut } from '@/lib/auth';
-import React, { useState } from 'react'
+"use client";
 
-const UserMenu = () => {
+import useProfileStore from "@/app/stores/profile/store";
+import { signOut } from "@/lib/auth";
+import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
+import { cn } from "@/lib/utils";
+
+const UserMenu = ({ transparent = false }: { transparent?: boolean }) => {
   const { profile } = useProfileStore();
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   if (!profile) return null;
 
@@ -14,33 +28,49 @@ const UserMenu = () => {
     profile.email?.charAt(0).toUpperCase() ||
     "?";
 
-
   return (
-    <div className="relative">
-      {/* Avatar circle */}
+    <div className="relative" ref={ref}>
       <button
+        type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex items-center justify-center w-9 h-9 rounded-full bg-blue-600 text-white font-bold"
+        className={cn(
+          "flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition",
+          transparent
+            ? "bg-white/20 text-white ring-2 ring-white/30 hover:bg-white/30"
+            : "bg-primary text-primary-foreground ring-2 ring-primary/20"
+        )}
       >
         {initial}
       </button>
 
-      {/* Dropdown menu */}
       {open && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg ring-1 ring-black/5 z-50 overflow-hidden">
-          <ul className="flex flex-col text-sm text-gray-700">
+        <div className="absolute right-0 mt-2 w-52 overflow-hidden rounded-xl border border-border bg-card shadow-xl">
+          <div className="border-b border-border px-4 py-3">
+            <p className="truncate text-sm font-medium text-foreground">
+              {profile.first_name} {profile.last_name}
+            </p>
+            <p className="truncate text-xs text-muted-foreground">
+              {profile.email}
+            </p>
+          </div>
+          <ul className="py-1 text-sm">
             <li>
-              <a
+              <Link
                 href="/app"
-                className="block px-4 py-3 hover:bg-gray-50 transition-colors duration-150"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2.5 text-foreground hover:bg-muted"
               >
-                Host an event
-              </a>
+                Dashboard
+              </Link>
             </li>
-            <li className="border-t border-gray-100">
+            <li>
               <button
-                onClick={() => signOut()}
-                className="w-full text-left px-4 py-3 hover:bg-red-50 text-red-600 transition-colors duration-150"
+                type="button"
+                onClick={() => {
+                  signOut();
+                  setOpen(false);
+                }}
+                className="w-full px-4 py-2.5 text-left text-destructive hover:bg-destructive/10"
               >
                 Log out
               </button>
@@ -50,6 +80,6 @@ const UserMenu = () => {
       )}
     </div>
   );
-}
+};
 
-export default UserMenu
+export default UserMenu;

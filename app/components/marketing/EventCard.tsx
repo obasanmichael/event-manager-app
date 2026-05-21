@@ -1,5 +1,6 @@
 import { Calendar, Clock, MapPin, Ticket } from "lucide-react";
 import Image from "next/image";
+import { Button } from "@/app/components/ui/Button";
 
 interface EventCardProps {
   image: string;
@@ -19,56 +20,48 @@ const EventCard = ({
   time,
   location,
   price,
-}: EventCardProps) => {
-  return (
-    <div className="group rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-blue-200">
-      {/* Image */}
-      <div className="relative h-52 overflow-hidden">
-        <Image
-          src={image}
-          sizes="(max-width: 640px) 100vw, 
-           (max-width: 1024px) 50vw, 
-           33vw"
-          fill
-          alt={title}
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-blue-700 shadow-sm flex items-center gap-1">
-          <Ticket className="h-3.5 w-3.5" />
-          {category}
+}: EventCardProps) => (
+  <article className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-brand">
+    <div className="relative h-52 overflow-hidden">
+      <Image
+        src={image}
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        fill
+        alt={title}
+        className="object-cover transition duration-500 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 transition group-hover:opacity-100" />
+      <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-border/50 bg-card/95 px-3 py-1 text-xs font-medium text-primary backdrop-blur-sm">
+        <Ticket className="h-3.5 w-3.5" />
+        {category}
+      </span>
+    </div>
+
+    <div className="p-5">
+      <h3 className="line-clamp-1 text-lg font-semibold text-foreground transition group-hover:text-primary">
+        {title}
+      </h3>
+
+      <div className="mt-3 space-y-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <Calendar className="h-4 w-4 shrink-0 text-primary" />
+          <span>{date}</span>
+          <span className="text-border">·</span>
+          <Clock className="h-4 w-4 shrink-0 text-primary" />
+          <span>{time}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <MapPin className="h-4 w-4 shrink-0 text-primary" />
+          <span className="truncate">{location}</span>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
-          {title}
-        </h3>
-
-        <div className="mt-3 space-y-2 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-blue-500" />
-            <span>{date}</span>
-            <span className="text-gray-400">•</span>
-            <Clock className="h-4 w-4 text-blue-500" />
-            <span>{time}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-blue-500 flex-shrink-0" />
-            <span className="truncate">{location}</span>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="mt-5 flex items-center justify-between">
-          <span className="text-lg font-bold text-gray-900">{price}</span>
-          <button className="px-4 py-2 text-sm rounded-full bg-blue-600 text-white font-medium shadow-sm hover:bg-blue-700 hover:shadow-md transition-all">
-            Get Tickets
-          </button>
-        </div>
+      <div className="mt-5 flex items-center justify-between">
+        <span className="text-lg font-bold text-foreground">{price}</span>
+        <Button size="sm">Get tickets</Button>
       </div>
     </div>
-  );
-};
+  </article>
+);
 
 export default EventCard;

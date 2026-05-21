@@ -1,38 +1,15 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
+import { parseSessionCookie, SESSION_COOKIE } from "./lib/session";
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next({request: {headers: req.headers}});
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name) {
-          return req.cookies.get(name)?.value;
-        },
-        set(name, value, options) {
-          res.cookies.set({ name, value, ...options });
-        },
-        remove(name, options) {
-          res.cookies.set({ name, value: "", ...options });
-        },
-      },
-    }
-  );
+  const sessionValue = req.cookies.get(SESSION_COOKIE)?.value;
+  const session = parseSessionCookie(sessionValue);
 
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
+  if (!session) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
 
-   
-
-   if (!session) {
-     return NextResponse.redirect(new URL("/login", req.url));
-   }
-
-   return res;
+  return NextResponse.next();
 }
 
 export const config = {
