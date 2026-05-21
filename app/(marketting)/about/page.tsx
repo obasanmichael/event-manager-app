@@ -13,7 +13,7 @@ const values = [
     icon: Target,
     title: "Our mission",
     description:
-      "Empower organizers and attendees by simplifying every step of event management — tickets, schedules, venues, and engagement in one platform.",
+      "Empower organizers and attendees by simplifying every step of event management, tickets, schedules, venues, and engagement in one platform.",
   },
   {
     icon: Eye,
@@ -25,7 +25,7 @@ const values = [
     icon: Users,
     title: "Community first",
     description:
-      "We build for organizers who bring people together — from intimate workshops to stadium-scale concerts.",
+      "We build for organizers who bring people together, from intimate workshops to stadium-scale concerts.",
   },
   {
     icon: Zap,
@@ -49,7 +49,7 @@ export default function AboutPage() {
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-lg text-muted-foreground">
             Me-event is a modern event management platform for concerts,
-            conferences, workshops, and everything in between — designed for
+            conferences, workshops, and everything in between, designed for
             organizers who care about craft.
           </p>
         </div>

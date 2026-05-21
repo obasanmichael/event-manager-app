@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Me-event — Discover & Host Events",
+  title: "Me-event, Discover & Host Events",
   description:
     "A modern platform to discover, host, and manage events seamlessly.",
 };

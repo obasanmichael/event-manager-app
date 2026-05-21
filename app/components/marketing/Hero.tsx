@@ -34,7 +34,7 @@ const Hero = () => {
           Create unforgettable experiences with effortless event management
         </h1>
         <p className="mt-6 max-w-2xl text-lg text-white/80 md:text-xl">
-          Plan, promote, and sell tickets — all in one place. Built for
+          Plan, promote, and sell tickets, all in one place. Built for
           organizers who care about every detail.
         </p>
 
