@@ -54,7 +54,7 @@ export const EventsService = {
     return { data, error: null };
   },
 
-  getUserEvents: async (_userId: string) => {
+  getUserEvents: async () => {
     const data = getStoredEvents();
     return { data, error: null };
   },

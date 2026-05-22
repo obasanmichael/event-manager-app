@@ -28,10 +28,14 @@ function establishSession(profile: Profile): AppUser {
 
 export async function signUpWithEmail(
   email: string,
-  _password: string,
+  password: string,
   fName: string,
   lName: string,
 ) {
+  if (!password.trim()) {
+    throw new Error("Password is required.");
+  }
+
   const existing = findProfileByEmail(email);
   if (existing) {
     throw new Error("An account with this email already exists. Please sign in.");
@@ -50,7 +54,11 @@ export async function signUpWithEmail(
   return establishSession(profile);
 }
 
-export async function signInWithEmail(email: string, _password: string) {
+export async function signInWithEmail(email: string, password: string) {
+  if (!password.trim()) {
+    throw new Error("Password is required.");
+  }
+
   const existing = findProfileByEmail(email);
   const profile: Profile = existing ?? {
     id: uuidv5(email.toLowerCase(), USER_NAMESPACE),
